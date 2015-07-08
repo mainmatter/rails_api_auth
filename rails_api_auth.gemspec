@@ -12,7 +12,8 @@ Gem::Specification.new do |s|
   s.description = 'Rails API Auth is a Rails Engine that implements the "Resource Owner Password Credentials Grant" OAuth 2.0 flow as well as Facebook authentication for API projects.'
   s.license     = 'MIT'
 
-  s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
+  s.files      = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
+  s.test_files = Dir['spec/**/*']
 
   s.add_dependency('rails', '>= 3.2.6', '< 5')
 end

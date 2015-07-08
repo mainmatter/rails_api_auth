@@ -8,3 +8,7 @@ group :development do
   gem 'guard-rspec',   require: false
   gem 'guard-bundler', require: false
 end
+
+group :test do
+  gem 'rspec-rails'
+end
