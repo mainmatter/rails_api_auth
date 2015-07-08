@@ -1,0 +1,69 @@
+AllCops:
+  RunRailsCops: true
+  Include:
+    - '**/Rakefile'
+  Exclude:
+    - '**/bin/**/*'
+    - 'vendor/**/*'
+
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedLastArgumentHashStyle: always_ignore
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+Style/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines
+
+Style/IndentationConsistency:
+  EnforcedStyle: rails
+
+Style/IndentHash:
+  EnforcedStyle: consistent
+
+Style/RaiseArgs:
+  EnforcedStyle: compact
+
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+ShadowingOuterLocalVariable:
+  Enabled: false
+
+ParallelAssignment:
+  Enabled: false
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/AbcSize:
+  Max: 25
