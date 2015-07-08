@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
+  gem 'sqlite3'
   gem 'guard-rubocop'
-  gem 'guard-rspec'
-  gem 'guard-bundler'
+  gem 'guard-rspec',   require: false
+  gem 'guard-bundler', require: false
 end

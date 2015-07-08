@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require 'active_record/railtie'
+require 'action_controller/railtie'
 
 Bundler.require(*Rails.groups)
 require 'rails_api_auth'
