@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - '**/bin/**/*'
     - 'vendor/**/*'
+    - 'spec/dummy/db/schema.rb'
 
 Style/AlignHash:
   EnforcedHashRocketStyle: table

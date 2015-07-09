@@ -16,4 +16,9 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*']
 
   s.add_dependency('rails', '>= 3.2.6', '< 5')
+  s.add_dependency('bcrypt', '~> 3.1.7')
+  s.add_dependency('rack-cors')
+  s.add_dependency('httparty', '0.13.3')
+  s.add_dependency('email_validator')
+  s.add_dependency('faker')
 end
