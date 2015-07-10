@@ -3,10 +3,9 @@ PATH
   specs:
     rails_api_auth (0.0.1)
       bcrypt (~> 3.1.7)
-      email_validator
-      faker
-      httparty (= 0.13.3)
-      rack-cors
+      email_validator (~> 1.6.0)
+      faker (~> 1.4.3)
+      httparty (~> 0.13.3)
       rails (>= 3.2.6, < 5)
 
 GEM
@@ -133,7 +132,6 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (1.6.4)
-    rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.3)
