@@ -1,1 +1,0 @@
-class FacebookApiError < StandardError; end

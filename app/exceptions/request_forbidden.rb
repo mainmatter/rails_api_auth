@@ -1,1 +1,0 @@
-class RequestForbidden < StandardError; end

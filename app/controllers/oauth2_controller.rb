@@ -1,5 +1,7 @@
 require 'login_not_found'
 
+class FacebookApiError < StandardError; end
+
 class Oauth2Controller < ApplicationController
 
   def create

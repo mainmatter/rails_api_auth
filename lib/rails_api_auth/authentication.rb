@@ -2,6 +2,8 @@ module RailsApiAuth
 
   module Authentication
 
+    class RequestForbidden < StandardError; end
+
     extend ActiveSupport::Concern
 
     included do
