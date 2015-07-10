@@ -5,7 +5,7 @@ require 'rails_api_auth/version'
 Gem::Specification.new do |s|
   s.name        = 'rails_api_auth'
   s.version     = RailsApiAuth::VERSION
-  s.authors     = ['Marco Otte-Witte']
+  s.authors     = ['Marco Otte-Witte', 'Oliver Barnes']
   s.email       = ['marco.otte-witte@simplabs.com']
   s.homepage    = 'https://github.com/simplabs/rails-api-auth'
   s.summary     = 'Engine that implements OAuth 2.0 and Facebook authentication for API projects'
