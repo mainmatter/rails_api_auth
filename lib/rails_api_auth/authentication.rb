@@ -5,7 +5,7 @@ module RailsApiAuth
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :current_user
+      attr_reader :current_login
 
       rescue_from RequestForbidden, with: :deny_access
 
@@ -18,7 +18,7 @@ module RailsApiAuth
         def authenticate!
           auth_header = request.headers[:authorization]
           token = auth_header ? auth_header.split(' ').last : ''
-          @current_user ||= Login.find_by!(oauth2_token: token).user
+          @current_login ||= Login.find_by!(oauth2_token: token)
 
         rescue ActiveRecord::RecordNotFound
           head 401

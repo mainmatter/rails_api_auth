@@ -4,22 +4,21 @@ describe Login do
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to allow_value('test@example.com').for(:email) }
   it { is_expected.to_not allow_value('test_example.com').for(:email) }
-  it { is_expected.to validate_presence_of(:user) }
 
   it 'validates presence of either password or Facebook UID' do
-    login = described_class.new(email: 'test@example.com', oauth2_token: 'token', user: build(:user))
+    login = described_class.new(email: 'test@example.com', oauth2_token: 'token')
 
     expect(login).to_not be_valid
   end
 
   it "doesn't validate presence of password when Facebook UID is present" do
-    login = described_class.new(email: 'test@example.com', oauth2_token: 'token', facebook_uid: '123', user: build(:user))
+    login = described_class.new(email: 'test@example.com', oauth2_token: 'token', facebook_uid: '123')
 
     expect(login).to be_valid
   end
 
   it "doesn't validate presence of Facebook UID  when password is present" do
-    login = described_class.new(email: 'test@example.com', oauth2_token: 'token', password: '123', user: build(:user))
+    login = described_class.new(email: 'test@example.com', oauth2_token: 'token', password: '123')
 
     expect(login).to be_valid
   end

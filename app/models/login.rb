@@ -5,20 +5,16 @@ class Login < ActiveRecord::Base
   class AlreadyVerifiedError < StandardError; end
   class InvalidSingleUseOAuth2Token < StandardError; end
 
-  belongs_to :user
   has_secure_password validations: false
 
   validates :email, presence: true, email: true
   validates :oauth2_token, presence: true
   validates :single_use_oauth2_token, presence: true
-  validates :user, presence: true
   validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }, confirmation: true
   validate :password_or_facebook_uid_present
 
   before_validation :ensure_oauth2_token
   before_validation :refresh_single_use_oauth2_token
-
-  delegate :first_name, :last_name, to: :user
 
   def refresh_oauth2_token!
     ensure_oauth2_token(true)

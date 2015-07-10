@@ -10,10 +10,10 @@ describe 'Authenticated route' do
 
   subject { get '/authenticated', {}, headers }
 
-  it 'assigns user found to @current_user' do
+  it 'assigns login found to @current_login' do
     subject
 
-    assigns[:current_user] = login.user
+    assigns[:current_login] = login
   end
 
   it '200' do

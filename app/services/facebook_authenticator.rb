@@ -27,17 +27,12 @@ class FacebookAuthenticator
     end
 
     def create_login_from_fb_account
-      user_attributes = {
-        first_name: facebook_user[:first_name],
-        last_name: facebook_user[:last_name]
-      }
       login_attributes = {
         email: facebook_user[:email],
         facebook_uid: facebook_user[:id]
       }
 
-      user = User.new(user_attributes)
-      @login = Login.create!(login_attributes.merge(user: user))
+      @login = Login.create!(login_attributes)
     end
 
     def facebook_user

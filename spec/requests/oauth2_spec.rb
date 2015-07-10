@@ -10,7 +10,7 @@ describe 'Oauth2 API' do
     subject { post '/token', params }
 
     context 'for grant_type "password"' do
-      context 'with valid user credentials' do
+      context 'with valid login credentials' do
         it 'succeeds' do
           subject
 
@@ -24,7 +24,7 @@ describe 'Oauth2 API' do
         end
       end
 
-      context 'with invalid user credentials' do
+      context 'with invalid login credentials' do
         let(:params) { { grant_type: 'password', username: 'bad@email.com', password: 'badpassword' } }
 
         it 'responds with status 400' do
@@ -48,9 +48,7 @@ describe 'Oauth2 API' do
       let(:facebook_data)   do
         {
           id:         '1238190321',
-          email:      facebook_email,
-          first_name: Faker::Name.first_name,
-          last_name:  Faker::Name.last_name
+          email:      facebook_email
         }
       end
 
@@ -81,12 +79,6 @@ describe 'Oauth2 API' do
 
       context 'when no login with the posted Facebook email exists' do
         let(:facebook_email) { Faker::Internet.email }
-        let(:user_attributes) do
-          {
-            first_name: facebook_data[:first_name],
-            last_name:  facebook_data[:last_name]
-          }
-        end
 
         it 'succeeds' do
           subject
@@ -96,18 +88,6 @@ describe 'Oauth2 API' do
 
         it 'creates a login with it' do
           expect { subject }.to change { Login.where(email: facebook_email).count }.by(1)
-        end
-
-        it 'creates a user with first and last names from facebook data, associated to the login' do
-          expect { subject }.to change {
-            User.where(user_attributes).count
-          }.by(1)
-        end
-
-        it 'ensures new user is associated to new login' do
-          subject
-
-          expect(Login.where(email: facebook_email).first.user).to eql User.where(user_attributes).first
         end
 
         it 'responds with an oauth2 token' do

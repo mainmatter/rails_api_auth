@@ -7,9 +7,7 @@ describe FacebookAuthenticator do
     let(:facebook_data) do
       {
         id:         '1238190321',
-        email:      email,
-        first_name: Faker::Name.first_name,
-        last_name:  Faker::Name.last_name
+        email:      email
       }
     end
     let(:response_with_fb_token) { { body: '{ "access_token": "access_token" }' } }
@@ -24,23 +22,14 @@ describe FacebookAuthenticator do
     end
 
     context 'new login' do
-      let(:user) { double('user') }
-      let(:user_attributes) do
-        {
-          first_name: facebook_data[:first_name],
-          last_name:  facebook_data[:last_name]
-        }
-      end
       let(:login_attributes) do
         {
           email:        facebook_data[:email],
-          facebook_uid: facebook_data[:id],
-          user: user
+          facebook_uid: facebook_data[:id]
         }
       end
 
       before do
-        allow(User).to receive(:new).with(user_attributes).and_return user
         allow(Login).to receive(:create!).with(login_attributes).and_return login
       end
 
