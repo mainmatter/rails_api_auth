@@ -1,40 +1,82 @@
-## RailsApiAuth
+# RailsApiAuth
 
-Rails API Auth is a Rails Engine that implements the "Resource Owner Password Credentials Grant" OAuth 2.0 flow as well as Facebook authentication for API projects.
+Rails API Auth is a Rails Engine that __implements the _"Resource Owner
+Password Credentials Grant"_ OAuth 2.0 flow
+([RFC 6749](http://tools.ietf.org/html/rfc6749#section-4.3)) as well as
+Facebook authentication for API projects__.
 
-It is a companion library to the [ember-simple-auth](http://ember-simple-auth.com) authentication addon for [Ember](http://emberjs.com), a front-end framework. 
+It uses __Bearer tokens__ ([RFC 6750](http://tools.ietf.org/html/rfc6750)) to
+authorize requests coming in from clients.
 
-But it can also be used with any other front-end systems following the oAuth2 spec.
+## Installation
 
-You can install and run this [demo application](https://github.com/simplabs/rails_api_auth-demo) to see how it works in practice (hosted version coming soon).
+To install the engine simply add
 
-To install on your project:
-
-```
-# Gemfile
+```ruby
 gem 'rails_auth_api'
 ```
 
-Run `bundle install` and then `rake db:migrate`.
+to the application's `Gemfile` and run `bundle install`.
 
-After installation, if you run `rake routes`, you'll see the following generated routes requesting and revoking access tokens:
+__Rails API Auth also adds a migration__ to the application so run
+
+```bash
+rake db:migrate
+```
+
+as well to migrate the database.
+
+## Usage
+
+__Rails API Auth stores a user's credentials as well as the tokens in a `Login`
+model__ so that this data remains separated from the application's `User` model
+(or `Account` or whatever the application chose to store profile data in).
+
+After installing the engine you can add the relation from your user model to
+the `Login` model:
+
+```ruby
+class User < ActiveRecord::Base
+
+  has_one :login # this could be has_many as well of course
+
+end
+```
+
+__The engine add 2 routes to the application__ that implement the endpoints for
+acquiring and revoking Bearer tokens:
 
 ```
- token POST /token(.:format)         oauth2#create
+token  POST /token(.:format)         oauth2#create
 revoke POST /revoke(.:format)        oauth2#destroy
 ```
 
-You'll also have two helpers availabe, `authenticate!` to protect your actions on a before filter:
+These endpoints are fully implemented in the engine and will issue or revoke
+Bearer tokens.
+
+In order to authorize incoming requests the engine provides the
+__`authenticate!` helper that can be used in controllers__ to make sure the
+request includes a valid Bearer token in the `Authorization` header:
+
+```ruby
+class AuthenticatedController < ApplicationController
+
+  include RailsApiAuth::Authentication
+
+  before_action :authenticate!
+
+  def index
+    render json: { success: true }
+  end
+
+end
 
 ```
-before_action :authenticate!
-```
 
-and `current_login` to access the login model object that will be created after successful login.
+If no valid Bearer token is provided the client will see a 401 response.
 
-This gem is in its very early versions, more documentation to come very soon!
-
-This project rocks and uses MIT-LICENSE.
+The engine also provides the `current_login` helper method that will return the
+`Login` model authorized with the sent Bearer token.
 
 ## License
 
