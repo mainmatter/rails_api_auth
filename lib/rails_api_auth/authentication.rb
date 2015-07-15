@@ -2,20 +2,12 @@ module RailsApiAuth
 
   module Authentication
 
-    class RequestForbidden < StandardError; end
-
     extend ActiveSupport::Concern
 
     included do
       attr_reader :current_login
 
-      rescue_from RequestForbidden, with: :deny_access
-
       private
-
-        def deny_access
-          head 403
-        end
 
         def authenticate!
           auth_header = request.headers[:authorization]
