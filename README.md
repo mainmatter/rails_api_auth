@@ -35,3 +35,9 @@ and `current_login` to access the login model object that will be created after 
 This gem is in its very early versions, more documentation to come very soon!
 
 This project rocks and uses MIT-LICENSE.
+
+## License
+
+Rails API Auth is developed by and &copy;
+[simplabs GmbH](http://simplabs.com) and contributors. It is released under the
+[MIT License](https://github.com/simplabs/ember-simple-auth/blob/master/LICENSE).
