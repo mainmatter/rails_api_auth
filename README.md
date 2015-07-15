@@ -43,8 +43,8 @@ class User < ActiveRecord::Base
 end
 ```
 
-__The engine add 2 routes to the application__ that implement the endpoints for
-acquiring and revoking Bearer tokens:
+__The engine adds 2 routes to the application__ that implement the endpoints
+for acquiring and revoking Bearer tokens:
 
 ```
 token  POST /token(.:format)         oauth2#create
