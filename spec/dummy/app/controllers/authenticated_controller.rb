@@ -7,7 +7,7 @@ class AuthenticatedController < ApplicationController
   before_action :authenticate!
 
   def index
-    render text: 'zuper content'
+    render text: 'zuper content', status: 201
   end
 
 end

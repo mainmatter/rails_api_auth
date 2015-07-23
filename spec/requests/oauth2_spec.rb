@@ -9,7 +9,7 @@ describe 'Oauth2 API' do
 
     context 'for grant_type "password"' do
       context 'with valid login credentials' do
-        it 'succeeds' do
+        it 'responds with status 200' do
           subject
 
           expect(response).to have_http_status(200)
@@ -55,40 +55,40 @@ describe 'Oauth2 API' do
         stub_request(:get, %r{https://graph.facebook.com/v2.3/me}).to_return(body: JSON.generate(facebook_data), headers: { 'Content-Type' => 'application/json' })
       end
 
-      context 'when a login with the posted Facebook email exists' do
+      context 'when a login with for the Facebook account exists' do
         it 'connects the login to the Facebook account' do
           subject
 
           expect(login.reload.facebook_uid).to eq(facebook_data[:id])
         end
 
-        it 'succeeds' do
+        it 'responds with status 200' do
           subject
 
           expect(response).to have_http_status(200)
         end
 
-        it 'responds with an oauth2 token' do
+        it "responds with the login's OAuth 2.0 token" do
           subject
 
           expect(response.body).to be_json_eql({ access_token: login.oauth2_token }.to_json)
         end
       end
 
-      context 'when no login with the posted Facebook email exists' do
+      context 'when no login for the Facebook account exists' do
         let(:facebook_email) { Faker::Internet.email }
 
-        it 'succeeds' do
+        it 'responds with status 200' do
           subject
 
           expect(response).to have_http_status(200)
         end
 
-        it 'creates a login with it' do
+        it 'creates a login for the Facebook account' do
           expect { subject }.to change { Login.where(email: facebook_email).count }.by(1)
         end
 
-        it 'responds with an oauth2 token' do
+        it "responds with the login's OAuth 2.0 token" do
           subject
           login = Login.find_by(email: facebook_email)
 
@@ -96,7 +96,7 @@ describe 'Oauth2 API' do
         end
       end
 
-      context 'when no facebook code is sent' do
+      context 'when no Facebook auth code is sent' do
         let(:params) { { grant_type: 'facebook_auth_code' } }
 
         it 'responds with status 400' do
@@ -105,7 +105,7 @@ describe 'Oauth2 API' do
           expect(response).to have_http_status(400)
         end
 
-        it 'responds with a no authorization code error' do
+        it 'responds with a "no_authorization_code" error' do
           subject
 
           expect(response.body).to be_json_eql({ error: 'no_authorization_code' }.to_json)
@@ -140,7 +140,7 @@ describe 'Oauth2 API' do
         expect(response).to have_http_status(400)
       end
 
-      it 'responds with an invalid grant error' do
+      it 'responds with an "unsupported_grant_type" error' do
         subject
 
         expect(response.body).to be_json_eql({ error: 'unsupported_grant_type' }.to_json)
@@ -153,29 +153,28 @@ describe 'Oauth2 API' do
 
     subject { post '/revoke', params }
 
-    it 'succeeds' do
+    it 'responds with status 200' do
       subject
 
       expect(response).to have_http_status(200)
     end
 
-    it 'resets login token' do
+    it "resets the login's OAuth 2.0 token" do
       expect { subject }.to change { login.reload.oauth2_token }
 
       subject
     end
 
-    context 'for an unknown (or stale) token' do
+    context 'for an invalid token' do
       let(:params) { { token_type_hint: 'access_token', token: 'badtoken' } }
 
-      it 'succeeds' do
+      it 'responds with status 200' do
         subject
 
         expect(response).to have_http_status(200)
       end
 
       it "doesn't reset any logins' token" do
-
         expect_any_instance_of(LoginNotFound).to receive(:refresh_oauth2_token!)
 
         subject

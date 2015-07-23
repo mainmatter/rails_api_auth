@@ -1,39 +1,41 @@
-describe 'Authenticated route' do
-  let!(:login) { create(:login) }
-  let(:headers) do
-    {
-      'Authorization': "Bearer #{login.oauth2_token}"
-    }
-  end
-
+describe 'an authenticated route' do
   subject { get '/authenticated', {}, headers }
 
-  it 'assigns login found to @current_login' do
-    subject
+  let(:headers) { {} }
 
-    assigns[:current_login] = login
-  end
+  context 'when a valid Bearer token is present' do
 
-  it '200' do
-    subject
+    let(:login) { create(:login) }
+    let(:headers) do
+      { 'Authorization': "Bearer #{login.oauth2_token}" }
+    end
 
-    expect(response.status).to eq 200
-  end
-
-  it 'lets the action get rendered' do
-    subject
-
-    expect(response.body).to eql 'zuper content'
-  end
-
-  context 'no token' do
-
-    subject { get '/authenticated' }
-
-    it '401' do
+    it 'assigns the authenticated login to @current_login' do
       subject
 
-      expect(response.status).to eq 401
+      expect(assigns[:current_login]).to eq(login)
+    end
+
+    it "responds with the actual action's status" do
+      subject
+
+      expect(response).to have_http_status(201)
+    end
+
+    it "responds with the actual action's body" do
+      subject
+
+      expect(response.body).to eql('zuper content')
+    end
+
+  end
+
+  context 'when no valid Bearer token is present' do
+
+    it 'responds with status 401' do
+      subject
+
+      expect(response).to have_http_status(401)
     end
 
     it 'responds with an empty body' do

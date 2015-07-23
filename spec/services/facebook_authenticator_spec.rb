@@ -1,5 +1,5 @@
 describe FacebookAuthenticator do
-  describe '#authenticate' do
+  describe '#authenticate!' do
     let(:auth_code) { 'authcode' }
     let(:email)     { 'email@facebook.com' }
     let(:facebook_data) do
@@ -19,7 +19,7 @@ describe FacebookAuthenticator do
       stub_request(:get, %r{https://graph.facebook.com/v2.3/me}).to_return(response_with_fb_user)
     end
 
-    context 'new login' do
+    context 'when no login for the Facebook account exists' do
       let(:login_attributes) do
         {
           email:        facebook_data[:email],
@@ -28,21 +28,21 @@ describe FacebookAuthenticator do
       end
 
       before do
-        allow(Login).to receive(:create!).with(login_attributes).and_return login
+        allow(Login).to receive(:create!).with(login_attributes).and_return(login)
       end
 
-      it 'returns a login created from facebook account' do
-        expect(subject).to eql login
+      it 'returns a login created from the Facebook account' do
+        expect(subject).to eql(login)
       end
     end
 
-    context 'existing login' do
+    context 'when a login for the Facebook account exists already' do
       before do
-        expect(Login).to receive(:find_by).with(email: facebook_data[:email]).and_return login
+        expect(Login).to receive(:find_by).with(email: facebook_data[:email]).and_return(login)
         allow(login).to receive(:update_attributes!).with(facebook_uid: facebook_data[:id])
       end
 
-      it 'connects login to facebook account' do
+      it 'connects the login to the Facebook account' do
         expect(login).to receive(:update_attributes!).with(facebook_uid: facebook_data[:id])
 
         subject
