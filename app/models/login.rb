@@ -3,7 +3,7 @@ require 'email_validator'
 class Login < ActiveRecord::Base
 
   class AlreadyVerifiedError < StandardError; end
-  class InvalidSingleUseOAuth2Token < StandardError; end
+  class InvalidOAuth2Token < StandardError; end
 
   has_secure_password validations: false
 
@@ -22,7 +22,7 @@ class Login < ActiveRecord::Base
   end
 
   def consume_single_use_oauth2_token!(token)
-    raise InvalidSingleUseOAuth2Token.new if token != single_use_oauth2_token
+    raise InvalidOAuth2Token.new if token != single_use_oauth2_token
     refresh_single_use_oauth2_token
     save!
   end

@@ -59,8 +59,8 @@ describe Login do
     end
 
     context 'when the supplied token is invalid' do
-      it 'raises an InvalidSingleUseOAuth2Token' do
-        expect { subject.consume_single_use_oauth2_token!('invalid token') }.to raise_error(Login::InvalidSingleUseOAuth2Token)
+      it 'raises an InvalidOAuth2Token' do
+        expect { subject.consume_single_use_oauth2_token!('invalid token') }.to raise_error(Login::InvalidOAuth2Token)
       end
     end
   end
