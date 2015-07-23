@@ -2,11 +2,13 @@ require 'httparty'
 
 class FacebookAuthenticator
 
+  class ApiError < StandardError; end
+
   def initialize(auth_code)
     @auth_code = auth_code
   end
 
-  def authenticate
+  def authenticate!
     if login.present?
       connect_login_to_fb_account
     else
@@ -44,7 +46,7 @@ class FacebookAuthenticator
 
     def facebook_request(url)
       response = HTTParty.get(url)
-      raise FacebookApiError.new if response.code != 200
+      raise ApiError.new if response.code != 200
       response
     end
 

@@ -1,7 +1,5 @@
 require 'login_not_found'
 
-class FacebookApiError < StandardError; end
-
 class Oauth2Controller < ApplicationController
 
   def create
@@ -39,12 +37,11 @@ class Oauth2Controller < ApplicationController
     def authenticate_with_facebook(auth_code)
       oauth2_error('no_authorization_code') && return unless auth_code.present?
 
-      login = FacebookAuthenticator.new(auth_code).authenticate
+      login = FacebookAuthenticator.new(auth_code).authenticate!
 
       render json: { access_token: login.oauth2_token }
-
-    rescue FacebookApiError
-      render nothing: true, status: 500
+    rescue FacebookAuthenticator::ApiError
+      render nothing: true, status: 502
     end
 
     def oauth2_error(error)
