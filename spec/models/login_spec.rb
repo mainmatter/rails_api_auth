@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Login do
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to allow_value('test@example.com').for(:email) }

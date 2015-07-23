@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe FacebookAuthenticator do
   describe '#authenticate' do
     let(:auth_code) { 'authcode' }
@@ -14,7 +12,7 @@ describe FacebookAuthenticator do
     let(:response_with_fb_user)  { { body: JSON.generate(facebook_data), headers: { 'Content-Type' => 'application/json' } } }
     let(:login)                  { double('login') }
 
-    subject { described_class.new(auth_code).authenticate }
+    subject { described_class.new(auth_code).authenticate! }
 
     before do
       stub_request(:get, %r{https://graph.facebook.com/v2.3/oauth/access_token}).to_return(response_with_fb_token)

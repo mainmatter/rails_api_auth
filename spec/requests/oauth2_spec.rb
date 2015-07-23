@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Oauth2 API' do
 
   let!(:login) { create(:login) }
@@ -119,10 +117,10 @@ describe 'Oauth2 API' do
           stub_request(:get, %r{https://graph.facebook.com/v2.3/oauth/access_token}).to_return(status: 422)
         end
 
-        it 'responds with status 500' do
+        it 'responds with status 502' do
           subject
 
-          expect(response).to have_http_status(500)
+          expect(response).to have_http_status(502)
         end
 
         it 'responds with an empty response body' do

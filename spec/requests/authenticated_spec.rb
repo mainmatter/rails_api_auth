@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Authenticated route' do
   let!(:login) { create(:login) }
   let(:headers) do
