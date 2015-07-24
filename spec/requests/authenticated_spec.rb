@@ -7,7 +7,7 @@ describe 'an authenticated route' do
 
     let(:login) { create(:login) }
     let(:headers) do
-      { 'Authorization': "Bearer #{login.oauth2_token}" }
+      { 'Authorization' => "Bearer #{login.oauth2_token}" }
     end
 
     it 'assigns the authenticated login to @current_login' do
