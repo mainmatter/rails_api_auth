@@ -5,6 +5,10 @@ class Login < ActiveRecord::Base
   class AlreadyVerifiedError < StandardError; end
   class InvalidOAuth2Token < StandardError; end
 
+  if RailsApiAuth.user_model_relation
+    belongs_to RailsApiAuth.user_model_relation, foreign_key: :user_id
+  end
+
   has_secure_password validations: false
 
   validates :email, presence: true, email: true

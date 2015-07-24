@@ -7,6 +7,7 @@ class CreateLogins < ActiveRecord::Migration
       t.string :oauth2_token,    null: false
       t.string :facebook_uid
       t.string :single_use_oauth2_token
+
       t.references :user
 
       t.timestamps

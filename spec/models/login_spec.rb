@@ -1,4 +1,9 @@
 describe Login do
+
+  it 'belongs to the configured user model' do
+    expect(subject).to belong_to(:account).with_foreign_key(:user_id)
+  end
+
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to allow_value('test@example.com').for(:email) }
   it { is_expected.to_not allow_value('test_example.com').for(:email) }
