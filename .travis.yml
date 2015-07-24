@@ -8,7 +8,9 @@ rvm:
 
 cache: bundler
 
-script: "bundle exec rspec"
+script: 
+  - RAILS_ENV=test bundle exec rake db:migrate
+  - bundle exec rspec
 
 notifications:
   email:
