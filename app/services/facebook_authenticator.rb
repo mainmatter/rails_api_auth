@@ -51,16 +51,16 @@ class FacebookAuthenticator
     end
 
     def fb_token_url
-      "#{Rails.application.config.x.facebook.graph_url}/oauth/access_token".tap do |url|
-        url << "?client_id=#{Rails.application.config.x.facebook.app_id}"
-        url << "&redirect_uri=#{Rails.application.config.x.facebook.redirect_uri}"
-        url << "&client_secret=#{Rails.application.config.x.facebook.app_secret}"
+      "#{RailsApiAuth.facebook_graph_url}/oauth/access_token".tap do |url|
+        url << "?client_id=#{RailsApiAuth.facebook_app_id}"
+        url << "&redirect_uri=#{RailsApiAuth.facebook_redirect_uri}"
+        url << "&client_secret=#{RailsApiAuth.facebook_app_secret}"
         url << "&code=#{@auth_code}"
       end
     end
 
     def fb_user_url(access_token)
-      "#{Rails.application.config.x.facebook.graph_url}/me?access_token=#{access_token}"
+      "#{RailsApiAuth.facebook_graph_url}/me?access_token=#{access_token}"
     end
 
 end

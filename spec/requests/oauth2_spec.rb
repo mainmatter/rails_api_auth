@@ -41,7 +41,7 @@ describe 'Oauth2 API' do
 
     context 'for grant_type "facebook_auth_code"' do
       let(:secret)                { described_class::FB_APP_SECRET }
-      let(:params)                { { grant_type: 'facebook_auth_code', auth_code: 'fb auth code' } }
+      let(:params)                { { grant_type: 'facebook_auth_code', auth_code: 'authcode' } }
       let(:facebook_email)        { login.email }
       let(:facebook_data)   do
         {
@@ -51,8 +51,10 @@ describe 'Oauth2 API' do
       end
 
       before do
-        stub_request(:get, %r{https://graph.facebook.com/v2.3/oauth/access_token}).to_return(body: '{ "access_token": "access_token" }')
-        stub_request(:get, %r{https://graph.facebook.com/v2.3/me}).to_return(body: JSON.generate(facebook_data), headers: { 'Content-Type' => 'application/json' })
+        stub_facebook_request('authcode', {
+          body:    JSON.generate(facebook_data),
+          headers: { 'Content-Type' => 'application/json' }
+        })
       end
 
       context 'when a login with for the Facebook account exists' do
@@ -114,7 +116,7 @@ describe 'Oauth2 API' do
 
       context 'when Facebook responds with an error' do
         before do
-          stub_request(:get, %r{https://graph.facebook.com/v2.3/oauth/access_token}).to_return(status: 422)
+          stub_facebook_request('authcode', status: 422)
         end
 
         it 'responds with status 502' do
