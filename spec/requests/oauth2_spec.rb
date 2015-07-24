@@ -51,10 +51,8 @@ describe 'Oauth2 API' do
       end
 
       before do
-        stub_facebook_request('authcode', {
-          body:    JSON.generate(facebook_data),
-          headers: { 'Content-Type' => 'application/json' }
-        })
+        stub_request(:get, "https://graph.facebook.com/oauth/access_token?client_id=app_id&client_secret=app_secret&code=authcode&redirect_uri=redirect_uri").to_return({ body: '{ "access_token": "access_token" }' })
+        stub_request(:get, 'https://graph.facebook.com/me?access_token=access_token').to_return({ body: JSON.generate(facebook_data), headers: { 'Content-Type' => 'application/json' } })
       end
 
       context 'when a login with for the Facebook account exists' do
@@ -116,7 +114,7 @@ describe 'Oauth2 API' do
 
       context 'when Facebook responds with an error' do
         before do
-          stub_facebook_request('authcode', status: 422)
+          stub_request(:get, 'https://graph.facebook.com/me?access_token=access_token').to_return(status: 422)
         end
 
         it 'responds with status 502' do

@@ -15,7 +15,8 @@ describe FacebookAuthenticator do
     subject { described_class.new(auth_code).authenticate! }
 
     before do
-      stub_facebook_request('authcode', response_with_fb_user)
+      stub_request(:get, "https://graph.facebook.com/oauth/access_token?client_id=app_id&client_secret=app_secret&code=authcode&redirect_uri=redirect_uri").to_return({ body: '{ "access_token": "access_token" }' })
+      stub_request(:get, 'https://graph.facebook.com/me?access_token=access_token').to_return(response_with_fb_user)
     end
 
     context 'when no login for the Facebook account exists' do
