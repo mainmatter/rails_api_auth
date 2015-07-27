@@ -28,5 +28,6 @@ config/secrets.yml
 .rvmrc
 
 # dummy app dbs and logs
-spec/dummy/db/*
+spec/dummy/db/*.sqlite3
+spec/dummy/db/*.sqlite3-journal
 spec/dummy/log/*
