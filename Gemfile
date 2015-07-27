@@ -10,6 +10,12 @@ platforms :jruby do
   gem 'activerecord-jdbc-adapter'
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'faker'
+end
+
 group :development do
   gem 'appraisal'
   gem 'guard-rubocop'
