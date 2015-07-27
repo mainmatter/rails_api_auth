@@ -4,7 +4,6 @@ PATH
     rails_api_auth (0.0.2)
       bcrypt (~> 3.1.7)
       email_validator (~> 1.6.0)
-      faker (~> 1.4.3)
       httparty (~> 0.13.3)
       rails (>= 3.2.6, < 5)
 
@@ -226,6 +225,7 @@ DEPENDENCIES
   activerecord-jdbc-adapter
   appraisal
   factory_girl_rails
+  faker
   guard-bundler
   guard-rspec
   guard-rubocop
