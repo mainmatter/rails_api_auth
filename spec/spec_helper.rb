@@ -7,8 +7,9 @@ require 'faker'
 
 Rails.backtrace_cleaner.remove_silencers!
 
-Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+%w(factories support).each do |path|
+  Dir["#{File.dirname(__FILE__)}/#{path}/**/*.rb"].each { |f| require f }
+end
 
 RSpec.configure do |config|
   config.mock_with :rspec
