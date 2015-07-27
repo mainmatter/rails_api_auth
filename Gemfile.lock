@@ -222,13 +222,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-jdbcsqlite3-adapter
   appraisal
   factory_girl_rails
   faker
   guard-bundler
   guard-rspec
   guard-rubocop
-  jdbc-sqlite3
   json_spec
   rails_api_auth!
   rspec-rails
