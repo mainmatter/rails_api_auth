@@ -7,7 +7,6 @@ platforms :ruby, :mswin, :mingw do
 end
 platforms :jruby do
   gem 'jdbc-sqlite3'
-  gem 'activerecord-jdbc-adapter'
 end
 
 group :development, :test do

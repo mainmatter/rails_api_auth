@@ -32,7 +32,6 @@ end
 
 platforms :jruby do
   gem "jdbc-sqlite3"
-  gem "activerecord-jdbc-adapter"
 end
 
 gemspec :path => "../"

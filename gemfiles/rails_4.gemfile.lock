@@ -222,7 +222,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-jdbc-adapter
   appraisal
   factory_girl_rails
   faker
