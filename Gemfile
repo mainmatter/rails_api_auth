@@ -11,19 +11,16 @@ platforms :jruby do
 end
 
 group :development do
+  gem 'appraisal'
   gem 'guard-rubocop'
   gem 'guard-rspec', require: false
   gem 'guard-bundler', require: false
-  gem 'factory_girl_rails'
 end
 
 group :test do
-  gem 'appraisal'
-  gem 'rspec-rails'
   gem 'shoulda'
   gem 'webmock', require: 'webmock/rspec'
   gem 'timecop'
   gem 'json_spec'
   gem 'test-unit'
-  gem 'faker'
 end
