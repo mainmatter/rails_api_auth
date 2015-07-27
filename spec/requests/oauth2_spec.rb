@@ -51,7 +51,7 @@ describe 'Oauth2 API' do
       end
 
       before do
-        stub_request(:get, "https://graph.facebook.com/oauth/access_token?client_id=app_id&client_secret=app_secret&code=authcode&redirect_uri=redirect_uri").to_return({ body: '{ "access_token": "access_token" }' })
+        stub_request(:get, 'https://graph.facebook.com/oauth/access_token?client_id=app_id&client_secret=app_secret&code=authcode&redirect_uri=redirect_uri').to_return({ body: '{ "access_token": "access_token" }' })
         stub_request(:get, 'https://graph.facebook.com/me?access_token=access_token').to_return({ body: JSON.generate(facebook_data), headers: { 'Content-Type' => 'application/json' } })
       end
 
