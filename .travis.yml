@@ -11,6 +11,7 @@ cache: bundler
 script: 
   - RAILS_ENV=test bundle exec rake db:migrate
   - bundle exec rspec
+  - bundle exec rubocop
 
 notifications:
   email:
