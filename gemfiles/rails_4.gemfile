@@ -3,21 +3,22 @@
 source "https://rubygems.org"
 
 gem "rails", "4.2.3"
+gem "bcrypt-ruby", "~> 3.0.0"
+
+platforms :ruby, :mswin, :mingw do
+  gem "sqlite3"
+end
+
+platforms :jruby do
+  gem "jdbc-sqlite3"
+  gem "activerecord-jdbc-adapter"
+end
 
 group :development do
   gem "guard-rubocop"
   gem "guard-rspec", :require => false
   gem "guard-bundler", :require => false
   gem "factory_girl_rails"
-
-  platforms :ruby, :mswin, :mingw do
-    gem "sqlite3"
-  end
-
-  platforms :jruby do
-    gem "jdbc-sqlite3"
-    gem "activerecord-jdbc-adapter"
-  end
 end
 
 group :test do
