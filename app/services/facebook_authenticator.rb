@@ -21,7 +21,7 @@ class FacebookAuthenticator
   private
 
     def login
-      @login ||= Login.find_by(email: facebook_user[:email])
+      @login ||= Login.where(email: facebook_user[:email]).first
     end
 
     def connect_login_to_fb_account

@@ -90,7 +90,7 @@ describe 'Oauth2 API' do
 
         it "responds with the login's OAuth 2.0 token" do
           subject
-          login = Login.find_by(email: facebook_email)
+          login = Login.where(email: facebook_email).first
 
           expect(response.body).to be_json_eql({ access_token: login.oauth2_token }.to_json)
         end
@@ -126,7 +126,7 @@ describe 'Oauth2 API' do
         it 'responds with an empty response body' do
           subject
 
-          expect(response.body).to eql('')
+          expect(response.body.strip).to eql('')
         end
       end
     end

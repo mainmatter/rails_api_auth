@@ -18,9 +18,11 @@ group :development do
 end
 
 group :test do
+  gem 'appraisal'
   gem 'rspec-rails'
   gem 'shoulda'
   gem 'webmock', require: 'webmock/rspec'
   gem 'timecop'
   gem 'json_spec'
+  gem 'test-unit'
 end

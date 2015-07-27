@@ -9,12 +9,16 @@ class Login < ActiveRecord::Base
     belongs_to RailsApiAuth.user_model_relation, foreign_key: :user_id
   end
 
-  has_secure_password validations: false
+  if Rails::VERSION::MAJOR >= 4
+    has_secure_password validations: false
+  else
+    has_secure_password
+  end
 
   validates :email, presence: true, email: true
   validates :oauth2_token, presence: true
   validates :single_use_oauth2_token, presence: true
-  validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }, confirmation: true
+  validates :password, length: { maximum: 72 }, confirmation: true
   validate :password_or_facebook_uid_present
 
   before_validation :ensure_oauth2_token
@@ -29,6 +33,14 @@ class Login < ActiveRecord::Base
     raise InvalidOAuth2Token.new if token != single_use_oauth2_token
     refresh_single_use_oauth2_token
     save!
+  end
+
+  if Rails::VERSION::MAJOR == 3
+    def errors
+      super.tap do |errors|
+        errors.delete(:password_digest)
+      end
+    end
   end
 
   private

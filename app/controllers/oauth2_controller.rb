@@ -16,7 +16,7 @@ class Oauth2Controller < ApplicationController
   def destroy
     oauth2_error('unsupported_token_type') && return unless params[:token_type_hint] == 'access_token'
 
-    login = Login.find_by(oauth2_token: params[:token]) || LoginNotFound.new
+    login = Login.where(oauth2_token: params[:token]).first || LoginNotFound.new
     login.refresh_oauth2_token!
 
     head 200
@@ -25,7 +25,7 @@ class Oauth2Controller < ApplicationController
   private
 
     def authenticate_with_credentials(email, password)
-      login = Login.find_by(email: email) || LoginNotFound.new
+      login = Login.where(email: email).first || LoginNotFound.new
 
       if login.authenticate(password)
         render json: { access_token: login.oauth2_token }

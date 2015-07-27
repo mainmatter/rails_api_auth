@@ -38,7 +38,7 @@ describe FacebookAuthenticator do
 
     context 'when a login for the Facebook account exists already' do
       before do
-        expect(Login).to receive(:find_by).with(email: facebook_data[:email]).and_return(login)
+        expect(Login).to receive(:where).with(email: facebook_data[:email]).and_return([login])
         allow(login).to receive(:update_attributes!).with(facebook_uid: facebook_data[:id])
       end
 

@@ -4,7 +4,7 @@ class AuthenticatedController < ApplicationController
 
   include RailsApiAuth::Authentication
 
-  before_action :authenticate!
+  before_filter :authenticate!
 
   def index
     render text: 'zuper content', status: 201

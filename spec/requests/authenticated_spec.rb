@@ -41,7 +41,7 @@ describe 'an authenticated route' do
     it 'responds with an empty body' do
       subject
 
-      expect(response.body).to be_empty
+      expect(response.body.strip).to be_empty
     end
   end
 end

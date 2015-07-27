@@ -10,6 +10,10 @@ rvm:
 
 cache: bundler
 
+gemfile:
+  - gemfiles/rails_3.gemfile
+  - gemfiles/rails_4.gemfile
+
 script: 
   - RAILS_ENV=test bundle exec rake db:migrate
   - bundle exec rspec
