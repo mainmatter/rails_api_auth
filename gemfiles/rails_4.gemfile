@@ -2,7 +2,6 @@
 
 source "https://rubygems.org"
 
-gem "sqlite3"
 gem "rails", "4.2.3"
 
 group :development, :test do
@@ -24,6 +23,10 @@ group :test do
   gem "timecop"
   gem "json_spec"
   gem "test-unit"
+end
+
+platforms :ruby, :mswin, :mingw do
+  gem "sqlite3"
 end
 
 platforms :jruby do
