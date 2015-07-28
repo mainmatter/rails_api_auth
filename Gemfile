@@ -2,9 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-platforms :ruby, :mswin, :mingw do
-  gem 'sqlite3'
-end
+gem 'sqlite3'
 platforms :jruby do
   gem 'activerecord-jdbcsqlite3-adapter'
 end
