@@ -13,6 +13,7 @@ pickle-email-*.html
 .DS_Store
 tags
 Gemfile.lock
+gemfiles/*.lock
 
 config/initializers/secret_token.rb
 config/secrets.yml
