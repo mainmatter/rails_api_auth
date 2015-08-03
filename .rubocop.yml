@@ -45,12 +45,6 @@ Style/GuardClause:
 Metrics/LineLength:
   Enabled: false
 
-ShadowingOuterLocalVariable:
-  Enabled: false
-
-ParallelAssignment:
-  Enabled: false
-
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
