@@ -49,8 +49,8 @@ __The engine adds 2 routes to the application__ that implement the endpoints
 for acquiring and revoking Bearer tokens:
 
 ```
-token  POST /token(.:format)         oauth2#create
-revoke POST /revoke(.:format)        oauth2#destroy
+token  POST /token(.:format)  oauth2#create
+revoke POST /revoke(.:format) oauth2#destroy
 ```
 
 These endpoints are fully implemented in the engine and will issue or revoke
@@ -79,6 +79,33 @@ If no valid Bearer token is provided the client will see a 401 response.
 
 The engine also provides the `current_login` helper method that will return the
 `Login` model authorized with the sent Bearer token.
+
+You can also invoke `authenticate!` with a block to perform additional checks
+on the current login, e.g. making sure the login's associated account has a
+certain role:
+
+```ruby
+class AuthenticatedController < ApplicationController
+
+  include RailsApiAuth::Authentication
+
+  before_action :authenticate_admin!
+
+  def index
+    render json: { success: true }
+  end
+
+  private
+
+    def authenticate_admin!
+      authenticate! do
+        current_login.account.admin?
+      end
+    end
+
+end
+
+```
 
 ## License
 
