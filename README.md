@@ -45,6 +45,34 @@ class User < ActiveRecord::Base
 end
 ```
 
+When creating a new `User` in the host application, make sure to create a
+related `Login` as well, e.g.:
+
+```ruby
+class UsersController < ApplicationController
+
+  def create
+    user = User.new(user_params)
+    if user.save && user.create_login(login_params)
+      head 201
+    else
+      head 422 # you'd actually want to return validation errors here
+    end
+  end
+
+  private
+
+    def user_params
+      params.require(:user).permit(:first_name, :last_name)
+    end
+
+    def login_params
+      params.require(:user).permit(:email, :password, :password_confirmation)
+    end
+
+end
+```
+
 __The engine adds 2 routes to the application__ that implement the endpoints
 for acquiring and revoking Bearer tokens:
 
