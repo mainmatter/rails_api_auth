@@ -32,6 +32,12 @@ describe 'an authenticated route' do
 
   context 'when no valid Bearer token is present' do
 
+    it 'does not assign the authenticated login to @current_login' do
+      subject
+
+      expect(assigns[:current_login]).to be_nil
+    end
+
     it 'responds with status 401' do
       subject
 
@@ -43,5 +49,7 @@ describe 'an authenticated route' do
 
       expect(response.body.strip).to be_empty
     end
+
   end
+
 end
