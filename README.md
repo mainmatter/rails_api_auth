@@ -115,7 +115,7 @@ module:
 
 ```ruby
 RailsApiAuth.tap do |raa|
-  raa.user_model_relation = :account # this will set up the belongs_to relation from the Login model to the Account model automatically
+  raa.user_model_relation = :account # this will set up the belongs_to relation from the Login model to the Account model automatically (of course if your application uses a User model this would be :user)
 
   raa.facebook_app_id       = '<your Facebook app id>'
   raa.facebook_app_secret   = '<your Facebook app secret>'
