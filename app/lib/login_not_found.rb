@@ -1,4 +1,4 @@
-class LoginNotFound
+class LoginNotFound #:nodoc:
 
   def authenticate(_)
     false

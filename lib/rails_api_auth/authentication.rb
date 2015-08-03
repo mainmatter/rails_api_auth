@@ -1,6 +1,6 @@
 module RailsApiAuth
 
-  module Authentication
+  module Authentication #:nodoc:
 
     extend ActiveSupport::Concern
 
