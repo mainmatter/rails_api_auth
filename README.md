@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/simplabs/rails_api_auth.svg)](https://travis-ci.org/simplabs/rails_api_auth)
 
-Rails API Auth is a Rails Engine that __implements the _"Resource Owner
-Password Credentials Grant"_ OAuth 2.0 flow
+Rails API Auth is a lightweight Rails Engine that __implements the _"Resource
+Owner Password Credentials Grant"_ OAuth 2.0 flow
 ([RFC 6749](http://tools.ietf.org/html/rfc6749#section-4.3)) as well as
 Facebook authentication for API projects__.
 
