@@ -1,5 +1,6 @@
 module RailsApiAuth
 
+  # @!visibility private
   class Engine < ::Rails::Engine
 
     initializer :append_migrations do |app|

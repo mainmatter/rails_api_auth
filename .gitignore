@@ -14,6 +14,8 @@ pickle-email-*.html
 tags
 Gemfile.lock
 gemfiles/*.lock
+doc
+.yardoc
 
 config/initializers/secret_token.rb
 config/secrets.yml

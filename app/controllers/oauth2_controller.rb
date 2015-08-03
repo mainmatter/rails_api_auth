@@ -1,5 +1,8 @@
 require 'login_not_found'
 
+# The controller that implements the engine's endpoints.
+#
+# @!visibility private
 class Oauth2Controller < ApplicationController
 
   def create

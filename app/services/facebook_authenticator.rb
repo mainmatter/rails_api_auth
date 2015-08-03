@@ -1,5 +1,8 @@
 require 'httparty'
 
+# Handles Facebook authentication
+#
+# @!visibility private
 class FacebookAuthenticator
 
   class ApiError < StandardError; end
