@@ -28,4 +28,5 @@ group :test do
   gem 'timecop'
   gem 'json_spec'
   gem 'test-unit'
+  gem 'simplecov', require: false
 end

@@ -1,5 +1,11 @@
 ENV['RAILS_ENV'] ||= 'test'
 
+require 'simplecov'
+SimpleCov.start do ||
+  minimum_coverage 95
+  refuse_coverage_drop
+end
+
 require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 require 'rspec/rails'
 require 'factory_girl_rails'
