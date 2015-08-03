@@ -21,14 +21,14 @@ ActiveRecord::Schema.define(version: 20150803185817) do
   end
 
   create_table "logins", force: :cascade do |t|
-    t.string   "email",                   limit: 255, null: false
-    t.string   "password_digest",         limit: 255
-    t.string   "oauth2_token",            limit: 255, null: false
-    t.string   "facebook_uid",            limit: 255
-    t.string   "single_use_oauth2_token", limit: 255
+    t.string   "email",                   null: false
+    t.string   "password_digest"
+    t.string   "oauth2_token",            null: false
+    t.string   "facebook_uid"
+    t.string   "single_use_oauth2_token"
     t.integer  "user_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

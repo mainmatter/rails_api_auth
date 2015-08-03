@@ -1,8 +1,27 @@
 require 'email_validator'
 
+# The `Login` __model encapsulates login credentials and the associated Bearer
+# tokens__. Rails API Auth uses this separate model so that login data and
+# user/profile data doesn't get mixed up and the Engine remains clearly
+# separeated from the code of the host application.
+#
+# The __`Login` model has `email` and `password` attributes__ (in fact it uses
+# Rails' [`has_secure_password`](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password))
+# __as well as a `facebook_uid`__ (if it represents a Facebook login)
+# attribute. As opposed to the standard `has_secure_password` behavior it
+# doesn't validate that the password must be present but instead validates that
+# __either__ the `password` or the `facebook_uid` are present as no password is
+# required in the case that Facebook is used for authentication.
+#
+# The `Login` model also stores the Bearer token in the `oauth2_token`
+# attribute. The model also stores an additional Bearer token, the
+# `single_use_oauth2_token`, that can be used for implementing thinks like
+# password reset where you need to make sure that the provided token can only
+# be used once.
 class Login < ActiveRecord::Base
 
-  class AlreadyVerifiedError < StandardError; end
+  # This is raised when an invalid token or a token that has already been
+  # consumed is consumed.
   class InvalidOAuth2Token < StandardError; end
 
   if RailsApiAuth.user_model_relation
@@ -24,11 +43,23 @@ class Login < ActiveRecord::Base
   before_validation :ensure_oauth2_token
   before_validation :refresh_single_use_oauth2_token
 
+  # Refreshes the Bearer token. This will effectively log out all clients that
+  # possess the previous token.
+  #
+  # @raise [ActiveRecord::RecordInvalid] if the model is invalid
   def refresh_oauth2_token!
     ensure_oauth2_token(true)
     save!
   end
 
+  # This validates the passed single use Bearer token and assigns a new one. It
+  # will raise an exception if the token is not valid or has already been
+  # consumed.
+  #
+  # @param token [String] the single use token to consume
+  # @raise [InvalidOAuth2Token] if the token is not valid or has already been
+  #   consumed
+  # @raise [ActiveRecord::RecordInvalid] if the model is invalid
   def consume_single_use_oauth2_token!(token)
     raise InvalidOAuth2Token.new if token != single_use_oauth2_token
     refresh_single_use_oauth2_token
@@ -36,6 +67,7 @@ class Login < ActiveRecord::Base
   end
 
   if Rails::VERSION::MAJOR == 3
+    # @!visibility private
     def errors
       super.tap do |errors|
         errors.delete(:password_digest)

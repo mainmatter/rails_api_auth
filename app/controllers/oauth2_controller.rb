@@ -1,6 +1,9 @@
 require 'login_not_found'
 
-class Oauth2Controller < ApplicationController #:nodoc:
+# The controller that implements the engine's endpoints.
+#
+# @!visibility private
+class Oauth2Controller < ApplicationController
 
   def create
     case params[:grant_type]

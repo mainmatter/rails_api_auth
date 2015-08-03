@@ -1,4 +1,7 @@
-class LoginNotFound #:nodoc:
+# Null Object that is used when no login is found for a Bearer token.
+#
+# @!visibility private
+class LoginNotFound
 
   def authenticate(_)
     false

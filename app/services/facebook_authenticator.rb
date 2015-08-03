@@ -1,6 +1,9 @@
 require 'httparty'
 
-class FacebookAuthenticator #:nodoc: all
+# Handles Facebook authentication
+#
+# @!visibility private
+class FacebookAuthenticator
 
   class ApiError < StandardError; end
 
