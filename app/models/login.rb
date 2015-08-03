@@ -1,12 +1,11 @@
-require 'email_validator'
-
 # The `Login` __model encapsulates login credentials and the associated Bearer
 # tokens__. Rails API Auth uses this separate model so that login data and
 # user/profile data doesn't get mixed up and the Engine remains clearly
 # separeated from the code of the host application.
 #
-# The __`Login` model has `email` and `password` attributes__ (in fact it uses
-# Rails' [`has_secure_password`](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password))
+# The __`Login` model has `identification` and `password` attributes__ (in fact
+# it uses Rails'
+# [`has_secure_password`](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password))
 # __as well as a `facebook_uid`__ (if it represents a Facebook login)
 # attribute. As opposed to the standard `has_secure_password` behavior it
 # doesn't validate that the password must be present but instead validates that
@@ -34,7 +33,7 @@ class Login < ActiveRecord::Base
     has_secure_password
   end
 
-  validates :email, presence: true, email: true
+  validates :identification, presence: true
   validates :oauth2_token, presence: true
   validates :single_use_oauth2_token, presence: true
   validates :password, length: { maximum: 72 }, confirmation: true

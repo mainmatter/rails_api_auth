@@ -2,7 +2,7 @@ describe 'Oauth2 API' do
   let!(:login) { create(:login) }
 
   describe 'POST /token' do
-    let(:params) { { grant_type: 'password', username: login.email, password: login.password } }
+    let(:params) { { grant_type: 'password', username: login.identification, password: login.password } }
 
     subject { post '/token', params }
 
@@ -22,7 +22,7 @@ describe 'Oauth2 API' do
       end
 
       context 'with invalid login credentials' do
-        let(:params) { { grant_type: 'password', username: 'bad@email.com', password: 'badpassword' } }
+        let(:params) { { grant_type: 'password', username: login.identification, password: 'badpassword' } }
 
         it 'responds with status 400' do
           subject
@@ -41,11 +41,11 @@ describe 'Oauth2 API' do
     context 'for grant_type "facebook_auth_code"' do
       let(:secret)                { described_class::FB_APP_SECRET }
       let(:params)                { { grant_type: 'facebook_auth_code', auth_code: 'authcode' } }
-      let(:facebook_email)        { login.email }
+      let(:facebook_email)        { login.identification }
       let(:facebook_data)   do
         {
-          id:         '1238190321',
-          email:      facebook_email
+          id:    '1238190321',
+          email: facebook_email
         }
       end
 
@@ -84,12 +84,12 @@ describe 'Oauth2 API' do
         end
 
         it 'creates a login for the Facebook account' do
-          expect { subject }.to change { Login.where(email: facebook_email).count }.by(1)
+          expect { subject }.to change { Login.where(identification: facebook_email).count }.by(1)
         end
 
         it "responds with the login's OAuth 2.0 token" do
           subject
-          login = Login.where(email: facebook_email).first
+          login = Login.where(identification: facebook_email).first
 
           expect(response.body).to be_json_eql({ access_token: login.oauth2_token }.to_json)
         end

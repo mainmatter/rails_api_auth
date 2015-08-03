@@ -4,8 +4,8 @@ describe FacebookAuthenticator do
     let(:email)     { 'email@facebook.com' }
     let(:facebook_data) do
       {
-        id:         '1238190321',
-        email:      email
+        id:    '1238190321',
+        email: email
       }
     end
     let(:response_with_fb_token) { { body: '{ "access_token": "access_token" }' } }
@@ -22,8 +22,8 @@ describe FacebookAuthenticator do
     context 'when no login for the Facebook account exists' do
       let(:login_attributes) do
         {
-          email:        facebook_data[:email],
-          facebook_uid: facebook_data[:id]
+          identification: facebook_data[:email],
+          facebook_uid:   facebook_data[:id]
         }
       end
 
@@ -38,7 +38,7 @@ describe FacebookAuthenticator do
 
     context 'when a login for the Facebook account exists already' do
       before do
-        expect(Login).to receive(:where).with(email: facebook_data[:email]).and_return([login])
+        expect(Login).to receive(:where).with(identification: facebook_data[:email]).and_return([login])
         allow(login).to receive(:update_attributes!).with(facebook_uid: facebook_data[:id])
       end
 

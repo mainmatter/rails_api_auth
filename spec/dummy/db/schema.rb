@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150803185817) do
   end
 
   create_table "logins", force: :cascade do |t|
-    t.string   "email",                   null: false
+    t.string   "identification",          null: false
     t.string   "password_digest"
     t.string   "oauth2_token",            null: false
     t.string   "facebook_uid"
