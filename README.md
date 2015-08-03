@@ -58,7 +58,8 @@ Bearer tokens.
 
 In order to authorize incoming requests the engine provides the
 __`authenticate!` helper that can be used in controllers__ to make sure the
-request includes a valid Bearer token in the `Authorization` header:
+request includes a valid Bearer token in the `Authorization` header (e.g.
+`Authorization: Bearer d5086ac8457b9db02a13`):
 
 ```ruby
 class AuthenticatedController < ApplicationController
@@ -103,6 +104,23 @@ class AuthenticatedController < ApplicationController
       end
     end
 
+end
+
+```
+
+## Configuration
+
+The Engine can be configured by simply setting some attributes on its main
+module:
+
+```ruby
+RailsApiAuth.tap do |raa|
+  raa.user_model_relation = :account # this will set up the belongs_to relation from the Login model to the Account model automatically
+
+  raa.facebook_app_id       = '<your Facebook app id>'
+  raa.facebook_app_secret   = '<your Facebook app secret>'
+  raa.facebook_graph_url    = 'https://graph.facebook.com'
+  raa.facebook_redirect_uri = '<your Facebook app redirect uri>'
 end
 
 ```
