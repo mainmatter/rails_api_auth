@@ -8,7 +8,6 @@ describe 'a custom authenticated route' do
   end
 
   context 'when the block returns true' do
-
     let(:account) { create(:account, first_name: 'user x') }
 
     it 'assigns the authenticated login to @current_login' do
@@ -28,11 +27,9 @@ describe 'a custom authenticated route' do
 
       expect(response.body).to eql('zuper content')
     end
-
   end
 
   context 'when the block returns false' do
-
     it 'responds with status 401' do
       subject
 

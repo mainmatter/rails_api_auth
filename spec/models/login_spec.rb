@@ -1,5 +1,4 @@
 describe Login do
-
   it 'belongs to the configured user model' do
     expect(subject).to belong_to(:account).with_foreign_key(:user_id)
   end

@@ -4,7 +4,6 @@ describe 'an authenticated route' do
   let(:headers) { {} }
 
   context 'when a valid Bearer token is present' do
-
     let(:login) { create(:login) }
     let(:headers) do
       { 'Authorization' => "Bearer #{login.oauth2_token}" }
@@ -27,11 +26,9 @@ describe 'an authenticated route' do
 
       expect(response.body).to eql('zuper content')
     end
-
   end
 
   context 'when no valid Bearer token is present' do
-
     it 'does not assign the authenticated login to @current_login' do
       subject
 
@@ -49,7 +46,5 @@ describe 'an authenticated route' do
 
       expect(response.body.strip).to be_empty
     end
-
   end
-
 end

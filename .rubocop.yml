@@ -60,9 +60,6 @@ Style/SignalException:
 Style/NumericLiterals:
   Enabled: false
 
-Style/EmptyLinesAroundBlockBody:
-  Enabled: false
-
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'

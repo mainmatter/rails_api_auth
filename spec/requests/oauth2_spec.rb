@@ -1,5 +1,4 @@
 describe 'Oauth2 API' do
-
   let!(:login) { create(:login) }
 
   describe 'POST /token' do
