@@ -6,7 +6,7 @@ SimpleCov.start do ||
   refuse_coverage_drop
 end
 
-require File.expand_path('../dummy/config/environment.rb',  __FILE__)
+require File.expand_path('../dummy/config/environment.rb', __FILE__)
 require 'rspec/rails'
 require 'factory_girl_rails'
 require 'faker'

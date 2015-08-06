@@ -42,7 +42,7 @@ describe 'Oauth2 API' do
       let(:secret)                { described_class::FB_APP_SECRET }
       let(:params)                { { grant_type: 'facebook_auth_code', auth_code: 'authcode' } }
       let(:facebook_email)        { login.identification }
-      let(:facebook_data)   do
+      let(:facebook_data) do
         {
           id:    '1238190321',
           email: facebook_email
