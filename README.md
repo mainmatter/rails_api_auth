@@ -15,7 +15,7 @@ authorize requests coming in from clients.
 To install the engine simply add
 
 ```ruby
-gem 'rails_auth_api'
+gem 'rails_api_auth'
 ```
 
 to the application's `Gemfile` and run `bundle install`.
