@@ -7,7 +7,7 @@ class CustomAuthenticatedController < ApplicationController
   before_filter :authenticate_with_account!
 
   def index
-    render text: 'zuper content', status: 201
+    render text: 'zuper content', status: 200
   end
 
   private

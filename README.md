@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save && user.create_login(login_params)
-      head 201
+      head 200
     else
       head 422 # you'd actually want to return validation errors here
     end
