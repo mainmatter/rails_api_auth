@@ -1,5 +1,5 @@
-group :red_green_refactor, halt_on_fail: true do
-  guard :rspec, cmd: 'bundle exec rspec --fail-fast' do
+group :red_green_refactor do
+  guard :rspec, cmd: 'bundle exec rspec' do
     require 'guard/rspec/dsl'
 
     dsl = Guard::RSpec::Dsl.new(self)
