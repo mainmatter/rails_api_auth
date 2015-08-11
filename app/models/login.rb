@@ -40,9 +40,9 @@ class Login < ActiveRecord::Base
   validate :password_or_facebook_uid_present
 
   before_validation :ensure_oauth2_token
-  before_validation :refresh_single_use_oauth2_token
+  before_validation :assign_single_use_oauth2_token
 
-  # Refreshes the Bearer token. This will effectively log out all clients that
+  # Refreshes the random token. This will effectively log out all clients that
   # possess the previous token.
   #
   # @raise [ActiveRecord::RecordInvalid] if the model is invalid
@@ -51,17 +51,11 @@ class Login < ActiveRecord::Base
     save!
   end
 
-  # This validates the passed single use Bearer token and assigns a new one. It
-  # will raise an exception if the token is not valid or has already been
-  # consumed.
+  # Refreshes the single use Oauth 2.0 token.
   #
-  # @param token [String] the single use token to consume
-  # @raise [InvalidOAuth2Token] if the token is not valid or has already been
-  #   consumed
   # @raise [ActiveRecord::RecordInvalid] if the model is invalid
-  def consume_single_use_oauth2_token!(token)
-    raise InvalidOAuth2Token.new if token != single_use_oauth2_token
-    refresh_single_use_oauth2_token
+  def refresh_single_use_oauth2_token!
+    assign_single_use_oauth2_token
     save!
   end
 
@@ -84,11 +78,15 @@ class Login < ActiveRecord::Base
 
     def ensure_oauth2_token(force = false)
       set_token = oauth2_token.blank? || force
-      self.oauth2_token = SecureRandom.hex(125) if set_token
+      self.oauth2_token = generate_token if set_token
     end
 
-    def refresh_single_use_oauth2_token
-      self.single_use_oauth2_token = SecureRandom.hex(125)
+    def assign_single_use_oauth2_token
+      self.single_use_oauth2_token = generate_token
+    end
+
+    def generate_token
+      SecureRandom.hex(125)
     end
 
 end

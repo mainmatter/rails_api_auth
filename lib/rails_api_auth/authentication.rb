@@ -28,7 +28,7 @@ module RailsApiAuth
     #   before_filter :authenticate!
     #
     #   def index
-    #     render text: 'zuper content', status: 201
+    #     render text: 'zuper content', status: 200
     #   end
     #
     # end
@@ -47,7 +47,7 @@ module RailsApiAuth
     #   before_filter :authenticate_admin!
     #
     #   def index
-    #     render text: 'zuper content', status: 201
+    #     render text: 'zuper content', status: 200
     #   end
     #
     #   private
@@ -63,15 +63,40 @@ module RailsApiAuth
     #
     # @see #current_login
 
+    # @!method consume_single_use_oauth2_token!
+    # Ensures that the `Authorization` header is present with a valid
+    # single-use Bearer token.
+    #
+    # If a valid bearer token is present this method will retrieve the
+    # respective `Login` model and store it in `current_login`. If no or an
+    # invalid Bearer token is present this will result in a 401 response. This
+    # will also changes the `Login`'s single use OAuth 2.0 token so that the
+    # same one cannot be used again. This authentication mechanism is generally
+    # useful for implementing e.g. password change functionality.
+    #
+    # This method will typically be called as a `before_action`:
+    #
+    # ```ruby
+    # class AuthenticatedController < ApplicationController
+    #
+    #   include RailsApiAuth::Authentication
+    #
+    #   before_filter :consume_single_use_oauth2_token!
+    #
+    #   def change_password
+    #     ...
+    #   end
+    #
+    # end
+    # ```
+
     included do
       attr_reader :current_login
 
       private
 
         def authenticate!(&block)
-          auth_header = request.headers['Authorization']
-          token = auth_header ? auth_header.split(' ').last : ''
-          @current_login = Login.where(oauth2_token: token).first!
+          @current_login = Login.where(oauth2_token: bearer_token).first!
 
           if block_given?
             head 401 unless block.call
@@ -80,6 +105,18 @@ module RailsApiAuth
           end
         rescue ActiveRecord::RecordNotFound
           head 401
+        end
+
+        def consume_single_use_oauth2_token!
+          @current_login = Login.where(single_use_oauth2_token: bearer_token).first!
+          @current_login.refresh_single_use_oauth2_token!
+        rescue ActiveRecord::RecordNotFound
+          head 401
+        end
+
+        def bearer_token
+          auth_header = request.headers['Authorization']
+          auth_header ? auth_header.split(' ').last : nil
         end
     end
 
