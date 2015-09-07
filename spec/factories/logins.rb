@@ -4,8 +4,9 @@ FactoryGirl.define do
     password       { Faker::Lorem.word }
 
     trait :facebook do
-      facebook_uid { Faker::Number.number }
+      uid { Faker::Number.number }
       password nil
+      provider 'facebook'
     end
   end
 end

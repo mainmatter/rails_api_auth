@@ -6,11 +6,11 @@
 # The __`Login` model has `identification` and `password` attributes__ (in fact
 # it uses Rails'
 # [`has_secure_password`](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password))
-# __as well as a `facebook_uid`__ (if it represents a Facebook login)
+# __as well as a `uid`__ (a Facebook uid or Google sub)
 # attribute. As opposed to the standard `has_secure_password` behavior it
 # doesn't validate that the password must be present but instead validates that
-# __either__ the `password` or the `facebook_uid` are present as no password is
-# required in the case that Facebook is used for authentication.
+# __either__ the `password` or the `uid` are present as no password is
+# required in the case that Facebook or Google is used for authentication.
 #
 # The `Login` model also stores the Bearer token in the `oauth2_token`
 # attribute. The model also stores an additional Bearer token, the
@@ -37,7 +37,7 @@ class Login < ActiveRecord::Base
   validates :oauth2_token, presence: true
   validates :single_use_oauth2_token, presence: true
   validates :password, length: { maximum: 72 }, confirmation: true
-  validate :password_or_facebook_uid_present
+  validate :password_or_uid_present
 
   before_validation :ensure_oauth2_token
   before_validation :assign_single_use_oauth2_token
@@ -70,9 +70,9 @@ class Login < ActiveRecord::Base
 
   private
 
-    def password_or_facebook_uid_present
-      if password_digest.blank? && facebook_uid.blank?
-        errors.add :base, 'either password_digest or facebook_uid must be present'
+    def password_or_uid_present
+      if password_digest.blank? && uid.blank?
+        errors.add :base, 'either password_digest or uid must be present'
       end
     end
 

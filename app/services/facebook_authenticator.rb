@@ -5,6 +5,8 @@ require 'httparty'
 # @!visibility private
 class FacebookAuthenticator
 
+  PROVIDER = 'facebook'
+
   class ApiError < StandardError; end
 
   def initialize(auth_code)
@@ -28,13 +30,14 @@ class FacebookAuthenticator
     end
 
     def connect_login_to_fb_account
-      login.update_attributes!(facebook_uid: facebook_user[:id])
+      login.update_attributes!(uid: facebook_user[:id], provider: PROVIDER)
     end
 
     def create_login_from_fb_account
       login_attributes = {
         identification: facebook_user[:email],
-        facebook_uid:   facebook_user[:id]
+        uid: facebook_user[:id],
+        provider: PROVIDER
       }
 
       @login = Login.create!(login_attributes)

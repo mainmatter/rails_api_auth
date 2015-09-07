@@ -58,7 +58,7 @@ describe 'Oauth2 API' do
         it 'connects the login to the Facebook account' do
           subject
 
-          expect(login.reload.facebook_uid).to eq(facebook_data[:id])
+          expect(login.reload.uid).to eq(facebook_data[:id])
         end
 
         it 'responds with status 200' do
