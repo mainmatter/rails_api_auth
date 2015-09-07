@@ -51,7 +51,11 @@ class FacebookAuthenticator
 
     def facebook_request(url)
       response = HTTParty.get(url)
-      raise ApiError.new if response.code != 200
+      unless response.code == 200
+        Rails.logger.warn "Facebook API request failed with status #{response.code}."
+        Rails.logger.debug "Facebook API error response was:\n#{response.body}"
+        raise ApiError.new
+      end
       response
     end
 
