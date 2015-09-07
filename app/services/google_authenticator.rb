@@ -62,7 +62,7 @@ class GoogleAuthenticator
     end
 
     def access_token
-      response = HTTParty.post(TOKEN_URL, @token_options)
+      response = HTTParty.post(TOKEN_URL, token_options)
       response.parsed_response['access_token']
     end
 
