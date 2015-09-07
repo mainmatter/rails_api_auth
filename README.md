@@ -153,6 +153,10 @@ end
 
 ```
 
+## Contribution
+
+See [CONTRIBUTING](https://github.com/simplabs/rails_api_auth/blob/master/CONTRIBUTING).
+
 ## License
 
 Rails API Auth is developed by and &copy;
