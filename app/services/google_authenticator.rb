@@ -3,17 +3,11 @@ require 'httparty'
 # Handles Google authentication
 #
 # @!visibility private
-class GoogleAuthenticator
+class GoogleAuthenticator < BaseAuthenticator
 
   PROVIDER = 'google'
   TOKEN_URL = 'https://www.googleapis.com/oauth2/v3/token'
-  PROFILE_URL = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect?access_token='
-
-  class ApiError < StandardError; end
-
-  def initialize(auth_code)
-    @auth_code = auth_code
-  end
+  PROFILE_URL = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect?access_token=%{access_token}'
 
   def authenticate!
     if login.present?
@@ -58,7 +52,7 @@ class GoogleAuthenticator
     end
 
     def user_url(access_token)
-      "#{PROFILE_URL}#{access_token}"
+      PROFILE_URL % { access_token: access_token }
     end
 
     def access_token

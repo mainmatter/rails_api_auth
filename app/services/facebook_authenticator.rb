@@ -3,15 +3,11 @@ require 'httparty'
 # Handles Facebook authentication
 #
 # @!visibility private
-class FacebookAuthenticator
+class FacebookAuthenticator < BaseAuthenticator
 
   PROVIDER = 'facebook'
-
-  class ApiError < StandardError; end
-
-  def initialize(auth_code)
-    @auth_code = auth_code
-  end
+  TOKEN_URL = 'https://graph.facebook.com/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&code=%{auth_code}&redirect_uri=%{redirect_uri}'
+  PROFILE_URL = 'https://graph.facebook.com/me?access_token=%{access_token}'
 
   def authenticate!
     if login.present?
@@ -45,8 +41,8 @@ class FacebookAuthenticator
 
     def facebook_user
       @facebook_user ||= begin
-        access_token = facebook_request(fb_token_url).parsed_response['access_token']
-        facebook_request(fb_user_url(access_token)).parsed_response.symbolize_keys
+        access_token = facebook_request(token_url).parsed_response['access_token']
+        facebook_request(user_url(access_token)).parsed_response.symbolize_keys
       end
     end
 
@@ -56,17 +52,13 @@ class FacebookAuthenticator
       response
     end
 
-    def fb_token_url
-      "#{RailsApiAuth.facebook_graph_url}/oauth/access_token".tap do |url|
-        url << "?client_id=#{RailsApiAuth.facebook_app_id}"
-        url << "&redirect_uri=#{RailsApiAuth.facebook_redirect_uri}"
-        url << "&client_secret=#{RailsApiAuth.facebook_app_secret}"
-        url << "&code=#{@auth_code}"
-      end
+    def token_url
+      url_options = { client_id: RailsApiAuth.facebook_app_id, client_secret: RailsApiAuth.facebook_app_secret, auth_code: @auth_code, redirect_uri: RailsApiAuth.facebook_redirect_uri }
+      TOKEN_URL % url_options
     end
 
-    def fb_user_url(access_token)
-      "#{RailsApiAuth.facebook_graph_url}/me?access_token=#{access_token}"
+    def user_url(access_token)
+      PROFILE_URL % { access_token: access_token }
     end
 
 end

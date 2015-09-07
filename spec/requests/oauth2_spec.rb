@@ -48,10 +48,12 @@ describe 'Oauth2 API' do
           email: facebook_email
         }
       end
+      let(:auth_code) { 'authcode' }
+      let(:token_parameters) { { client_id: 'app_id', client_secret: 'app_secret', auth_code: auth_code, redirect_uri: 'redirect_uri' } }
 
       before do
-        stub_request(:get, 'https://graph.facebook.com/oauth/access_token?client_id=app_id&client_secret=app_secret&code=authcode&redirect_uri=redirect_uri').to_return({ body: '{ "access_token": "access_token" }' })
-        stub_request(:get, 'https://graph.facebook.com/me?access_token=access_token').to_return({ body: JSON.generate(facebook_data), headers: { 'Content-Type' => 'application/json' } })
+        stub_request(:get, FacebookAuthenticator::TOKEN_URL % token_parameters).to_return({ body: '{ "access_token": "access_token" }' })
+        stub_request(:get, FacebookAuthenticator::PROFILE_URL % { access_token: 'access_token' }).to_return({ body: JSON.generate(facebook_data), headers: { 'Content-Type' => 'application/json' } })
       end
 
       context 'when a login with for the Facebook account exists' do

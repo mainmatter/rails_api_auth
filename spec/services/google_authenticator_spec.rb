@@ -1,5 +1,3 @@
-require 'webmock/rspec'
-
 describe GoogleAuthenticator do
   describe '#authenticate!' do
     let(:provider) { 'google' }
@@ -18,9 +16,9 @@ describe GoogleAuthenticator do
     subject { described_class.new(auth_code).authenticate! }
 
     before do
-      stub_request(:post, 'https://www.googleapis.com/oauth2/v3/token').
-        with(body: hash_including(grant_type: 'authorization_code')).to_return(body: response_with_token.to_s)
-      stub_request(:get, 'https://www.googleapis.com/plus/v1/people/me/openIdConnect?access_token=access_token').to_return(response_with_user)
+      stub_request(:post, described_class::TOKEN_URL).
+        with(body: hash_including(grant_type: 'authorization_code')).to_return(response_with_token)
+      stub_request(:get, described_class::PROFILE_URL % { access_token: 'access_token' }).to_return(response_with_user)
     end
 
     context 'when no login for the Google account exists' do
