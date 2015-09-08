@@ -12,7 +12,6 @@ class FacebookAuthenticator
   end
 
   def authenticate!
-    access_token  = get_access_token(@auth_code)
     facebook_user = get_facebook_user(access_token)
     login         = find_login(facebook_user)
 
@@ -44,8 +43,8 @@ class FacebookAuthenticator
       Login.create!(login_attributes)
     end
 
-    def get_access_token(auth_code)
-      response = facebook_request(fb_token_url(auth_code)).body
+    def access_token
+      response = facebook_request(fb_token_url).body
       response.match(/access_token=([^&]+)/)[1]
     end
 
@@ -66,12 +65,12 @@ class FacebookAuthenticator
       response
     end
 
-    def fb_token_url(auth_code)
+    def fb_token_url
       "#{RailsApiAuth.facebook_graph_url}/oauth/access_token".tap do |url|
         url << "?client_id=#{RailsApiAuth.facebook_app_id}"
         url << "&redirect_uri=#{RailsApiAuth.facebook_redirect_uri}"
         url << "&client_secret=#{RailsApiAuth.facebook_app_secret}"
-        url << "&code=#{auth_code}"
+        url << "&code=#{@auth_code}"
       end
     end
 
