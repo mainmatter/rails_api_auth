@@ -28,7 +28,7 @@ class FacebookAuthenticator
   private
 
     def find_login(facebook_user)
-      @login ||= Login.where(identification: facebook_user[:email]).first
+      Login.where(identification: facebook_user[:email]).first
     end
 
     def connect_login_to_fb_account(login, facebook_user)
@@ -41,7 +41,7 @@ class FacebookAuthenticator
         facebook_uid:   facebook_user[:id]
       }
 
-      @login = Login.create!(login_attributes)
+      Login.create!(login_attributes)
     end
 
     def get_access_token(auth_code)
