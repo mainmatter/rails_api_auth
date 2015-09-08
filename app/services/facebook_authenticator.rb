@@ -12,10 +12,13 @@ class FacebookAuthenticator
   end
 
   def authenticate!
+    facebook_user = get_facebook_user(access_token)
+    login         = find_login(facebook_user)
+
     if login.present?
-      connect_login_to_fb_account
+      connect_login_to_fb_account(login, facebook_user)
     else
-      create_login_from_fb_account
+      login = create_login_from_fb_account(facebook_user)
     end
 
     login
@@ -23,27 +26,30 @@ class FacebookAuthenticator
 
   private
 
-    def login
-      @login ||= Login.where(identification: facebook_user[:email]).first
+    def find_login(facebook_user)
+      Login.where(identification: facebook_user[:email]).first
     end
 
-    def connect_login_to_fb_account
+    def connect_login_to_fb_account(login, facebook_user)
       login.update_attributes!(facebook_uid: facebook_user[:id])
     end
 
-    def create_login_from_fb_account
+    def create_login_from_fb_account(facebook_user)
       login_attributes = {
         identification: facebook_user[:email],
         facebook_uid:   facebook_user[:id]
       }
 
-      @login = Login.create!(login_attributes)
+      Login.create!(login_attributes)
     end
 
-    def facebook_user
+    def access_token
+      response = facebook_request(fb_token_url).body
+      response.match(/access_token=([^&]+)/)[1]
+    end
+
+    def get_facebook_user(access_token)
       @facebook_user ||= begin
-        response = facebook_request(fb_token_url).body
-        access_token = response.match(/access_token=([^&]+)/)[1]
         parsed_response = facebook_request(fb_user_url(access_token)).parsed_response
         parsed_response.symbolize_keys
       end
