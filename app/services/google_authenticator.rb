@@ -9,55 +9,35 @@ class GoogleAuthenticator < BaseAuthenticator
   TOKEN_URL = 'https://www.googleapis.com/oauth2/v3/token'
   PROFILE_URL = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect?access_token=%{access_token}'
 
-  def authenticate!
-    if login.present?
-      connect_login_to_google_account
-    else
-      create_login_from_google_account
-    end
-
-    login
-  end
-
   private
 
-    def login
-      @login ||= Login.where(identification: google_user[:email]).first
+    def connect_login_to_account(login, user)
+      login.update_attributes!(uid: user[:sub], provider: PROVIDER)
     end
 
-    def connect_login_to_google_account
-      login.update_attributes!(uid: google_user[:sub], provider: PROVIDER)
-    end
-
-    def create_login_from_google_account
+    def create_login_from_account(user)
       login_attributes = {
-        identification: google_user[:email],
-        uid: google_user[:sub],
+        identification: user[:email],
+        uid: user[:sub],
         provider: PROVIDER
       }
 
-      @login = Login.create!(login_attributes)
-    end
-
-    def google_user
-      @google_user ||= begin
-        get_request(user_url(access_token)).parsed_response.symbolize_keys
-      end
-    end
-
-    def get_request(url)
-      response = HTTParty.get(url)
-      raise ApiError.new if response.code != 200
-      response
-    end
-
-    def user_url(access_token)
-      PROFILE_URL % { access_token: access_token }
+      Login.create!(login_attributes)
     end
 
     def access_token
       response = HTTParty.post(TOKEN_URL, token_options)
       response.parsed_response['access_token']
+    end
+
+    def get_user(access_token)
+      @google_user ||= begin
+        get_request(user_url(access_token)).parsed_response.symbolize_keys
+      end
+    end
+
+    def user_url(access_token)
+      PROFILE_URL % { access_token: access_token }
     end
 
     def token_options

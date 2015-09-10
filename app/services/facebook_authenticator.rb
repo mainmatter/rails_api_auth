@@ -9,33 +9,16 @@ class FacebookAuthenticator < BaseAuthenticator
   TOKEN_URL = 'https://graph.facebook.com/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&code=%{auth_code}&redirect_uri=%{redirect_uri}'
   PROFILE_URL = 'https://graph.facebook.com/me?fields=email,name&access_token=%{access_token}'
 
-  def authenticate!
-    facebook_user = get_facebook_user(access_token)
-    login         = find_login(facebook_user)
-
-    if login.present?
-      connect_login_to_fb_account(login, facebook_user)
-    else
-      login = create_login_from_fb_account(facebook_user)
-    end
-
-    login
-  end
-
   private
 
-    def find_login(facebook_user)
-      Login.where(identification: facebook_user[:email]).first
+    def connect_login_to_account(login, user)
+      login.update_attributes!(uid: user[:id], provider: PROVIDER)
     end
 
-    def connect_login_to_fb_account(login, facebook_user)
-      login.update_attributes!(uid: facebook_user[:id], provider: PROVIDER)
-    end
-
-    def create_login_from_fb_account(facebook_user)
+    def create_login_from_account(user)
       login_attributes = {
-        identification: facebook_user[:email],
-        uid: facebook_user[:id],
+        identification: user[:email],
+        uid: user[:id],
         provider: PROVIDER
       }
 
@@ -43,25 +26,15 @@ class FacebookAuthenticator < BaseAuthenticator
     end
 
     def access_token
-      response = facebook_request(token_url).body
+      response = get_request(token_url).body
       response.match(/access_token=([^&]+)/)[1]
     end
 
-    def get_facebook_user(access_token)
+    def get_user(access_token)
       @facebook_user ||= begin
-        parsed_response = facebook_request(user_url(access_token)).parsed_response
+        parsed_response = get_request(user_url(access_token)).parsed_response
         parsed_response.symbolize_keys
       end
-    end
-
-    def facebook_request(url)
-      response = HTTParty.get(url)
-      unless response.code == 200
-        Rails.logger.warn "Facebook API request failed with status #{response.code}."
-        Rails.logger.debug "Facebook API error response was:\n#{response.body}"
-        raise ApiError.new
-      end
-      response
     end
 
     def token_url
