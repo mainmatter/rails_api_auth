@@ -4,8 +4,8 @@ shared_context 'stubbed google requests' do
   let(:response_with_user)  { { body: JSON.generate(google_data), headers: { 'Content-Type' => 'application/json' } } }
 
   before do
-    stub_request(:post, described_class::TOKEN_URL).
+    stub_request(:post, GoogleAuthenticator::TOKEN_URL).
       with(body: hash_including(grant_type: 'authorization_code')).to_return(response_with_token)
-    stub_request(:get, described_class::PROFILE_URL % { access_token: 'access_token' }).to_return(response_with_user)
+    stub_request(:get, GoogleAuthenticator::PROFILE_URL % { access_token: 'access_token' }).to_return(response_with_user)
   end
 end
