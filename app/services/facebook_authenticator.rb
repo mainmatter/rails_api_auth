@@ -1,4 +1,5 @@
 require 'httparty'
+require 'pry'
 
 # Handles Facebook authentication
 #
@@ -6,8 +7,8 @@ require 'httparty'
 class FacebookAuthenticator < BaseAuthenticator
 
   PROVIDER = 'facebook'
-  TOKEN_URL = 'https://graph.facebook.com/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&code=%{auth_code}&redirect_uri=%{redirect_uri}'
-  PROFILE_URL = 'https://graph.facebook.com/me?fields=email,name&access_token=%{access_token}'
+  TOKEN_URL = 'https://graph.facebook.com/v2.4/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&code=%{auth_code}&redirect_uri=%{redirect_uri}'
+  PROFILE_URL = 'https://graph.facebook.com/v2.4/me?fields=email,name&access_token=%{access_token}'
 
   private
 
@@ -26,8 +27,8 @@ class FacebookAuthenticator < BaseAuthenticator
     end
 
     def access_token
-      response = get_request(token_url).body
-      response.match(/access_token=([^&]+)/)[1]
+      response = get_request(token_url)
+      response.parsed_response.symbolize_keys[:access_token]
     end
 
     def get_user(access_token)
