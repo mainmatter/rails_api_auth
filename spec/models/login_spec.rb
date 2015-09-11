@@ -12,7 +12,7 @@ describe Login do
   end
 
   it "doesn't validate presence of password when Facebook UID is present" do
-    login = described_class.new(identification: 'test@example.com', oauth2_token: 'token', facebook_uid: '123')
+    login = described_class.new(identification: 'test@example.com', oauth2_token: 'token', uid: '123', provider: 'facebook')
 
     expect(login).to be_valid
   end

@@ -20,12 +20,20 @@ module RailsApiAuth
   # The Facebook App secret.
   mattr_accessor :facebook_app_secret
 
-  # @!attribute [rw] facebook_graph_url
-  # The Facebook grahp URL.
-  mattr_accessor :facebook_graph_url
-
   # @!attribute [rw] facebook_redirect_uri
   # The Facebook App's redirect URI.
   mattr_accessor :facebook_redirect_uri
+
+  # @!attribute [rw] google_client_id
+  # The Google client ID.
+  mattr_accessor :google_client_id
+
+  # @!attribute [rw] google_client_secret
+  # The Google client secret.
+  mattr_accessor :google_client_secret
+
+  # @!attribute [rw] google_redirect_uri
+  # The Google App's redirect URI.
+  mattr_accessor :google_redirect_uri
 
 end

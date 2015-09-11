@@ -17,7 +17,8 @@ describe FacebookAuthenticator do
       let(:login_attributes) do
         {
           identification: facebook_data[:email],
-          facebook_uid:   facebook_data[:id]
+          uid: facebook_data[:id],
+          provider: 'facebook'
         }
       end
 
@@ -33,11 +34,11 @@ describe FacebookAuthenticator do
     context 'when a login for the Facebook account exists already' do
       before do
         expect(Login).to receive(:where).with(identification: facebook_data[:email]).and_return([login])
-        allow(login).to receive(:update_attributes!).with(facebook_uid: facebook_data[:id])
+        allow(login).to receive(:update_attributes!).with(uid: facebook_data[:id], provider: 'facebook')
       end
 
       it 'connects the login to the Facebook account' do
-        expect(login).to receive(:update_attributes!).with(facebook_uid: facebook_data[:id])
+        expect(login).to receive(:update_attributes!).with(uid: facebook_data[:id], provider: 'facebook')
 
         subject
       end

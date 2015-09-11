@@ -1,81 +1,50 @@
 require 'httparty'
+require 'pry'
 
 # Handles Facebook authentication
 #
 # @!visibility private
-class FacebookAuthenticator
+class FacebookAuthenticator < BaseAuthenticator
 
-  class ApiError < StandardError; end
-
-  def initialize(auth_code)
-    @auth_code = auth_code
-  end
-
-  def authenticate!
-    facebook_user = get_facebook_user(access_token)
-    login         = find_login(facebook_user)
-
-    if login.present?
-      connect_login_to_fb_account(login, facebook_user)
-    else
-      login = create_login_from_fb_account(facebook_user)
-    end
-
-    login
-  end
+  PROVIDER = 'facebook'
+  TOKEN_URL = 'https://graph.facebook.com/v2.4/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&code=%{auth_code}&redirect_uri=%{redirect_uri}'
+  PROFILE_URL = 'https://graph.facebook.com/v2.4/me?fields=email,name&access_token=%{access_token}'
 
   private
 
-    def find_login(facebook_user)
-      Login.where(identification: facebook_user[:email]).first
+    def connect_login_to_account(login, user)
+      login.update_attributes!(uid: user[:id], provider: PROVIDER)
     end
 
-    def connect_login_to_fb_account(login, facebook_user)
-      login.update_attributes!(facebook_uid: facebook_user[:id])
-    end
-
-    def create_login_from_fb_account(facebook_user)
+    def create_login_from_account(user)
       login_attributes = {
-        identification: facebook_user[:email],
-        facebook_uid:   facebook_user[:id]
+        identification: user[:email],
+        uid: user[:id],
+        provider: PROVIDER
       }
 
       Login.create!(login_attributes)
     end
 
     def access_token
-      response = facebook_request(fb_token_url).body
-      response.match(/access_token=([^&]+)/)[1]
+      response = get_request(token_url)
+      response.parsed_response.symbolize_keys[:access_token]
     end
 
-    def get_facebook_user(access_token)
+    def get_user(access_token)
       @facebook_user ||= begin
-        parsed_response = facebook_request(fb_user_url(access_token)).parsed_response
+        parsed_response = get_request(user_url(access_token)).parsed_response
         parsed_response.symbolize_keys
       end
     end
 
-    def facebook_request(url)
-      response = HTTParty.get(url)
-      unless response.code == 200
-        Rails.logger.warn "Facebook API request failed with status #{response.code}."
-        Rails.logger.debug "Facebook API error response was:\n#{response.body}"
-        raise ApiError.new
-      end
-      response
+    def token_url
+      url_options = { client_id: RailsApiAuth.facebook_app_id, client_secret: RailsApiAuth.facebook_app_secret, auth_code: @auth_code, redirect_uri: RailsApiAuth.facebook_redirect_uri }
+      TOKEN_URL % url_options
     end
 
-    def fb_token_url
-      "#{RailsApiAuth.facebook_graph_url}/oauth/access_token".tap do |url|
-        url << "?client_id=#{RailsApiAuth.facebook_app_id}"
-        url << "&redirect_uri=#{RailsApiAuth.facebook_redirect_uri}"
-        url << "&client_secret=#{RailsApiAuth.facebook_app_secret}"
-        url << "&code=#{@auth_code}"
-      end
-    end
-
-    def fb_user_url(access_token)
-      "#{RailsApiAuth.facebook_graph_url}/me?fields=email,name&access_token=#{access_token}"
+    def user_url(access_token)
+      PROFILE_URL % { access_token: access_token }
     end
 
 end

@@ -5,20 +5,23 @@
 Rails API Auth is a lightweight Rails Engine that __implements the _"Resource
 Owner Password Credentials Grant"_ OAuth 2.0 flow
 ([RFC 6749](http://tools.ietf.org/html/rfc6749#section-4.3)) as well as
-Facebook authentication for API projects__.
+Facebook and Google authentication for API projects__.
 
 It uses __Bearer tokens__ ([RFC 6750](http://tools.ietf.org/html/rfc6750)) to
 authorize requests coming in from clients.
 
 ## Installation
 
-To install the engine simply add
+To install the engine simply add to the application's `Gemfile`
 
 ```ruby
 gem 'rails_api_auth'
 ```
 
-to the application's `Gemfile` and run `bundle install`.
+ and run:
+```bash
+bundle install
+```
 
 __Rails API Auth also adds a migration__ to the application so run
 
@@ -145,10 +148,16 @@ module:
 RailsApiAuth.tap do |raa|
   raa.user_model_relation = :account # this will set up the belongs_to relation from the Login model to the Account model automatically (of course if your application uses a User model this would be :user)
 
+  # Facebook configurations
   raa.facebook_app_id       = '<your Facebook app id>'
   raa.facebook_app_secret   = '<your Facebook app secret>'
-  raa.facebook_graph_url    = 'https://graph.facebook.com'
   raa.facebook_redirect_uri = '<your Facebook app redirect uri>'
+
+  # Google configurations
+  raa.google_client_id = '<your Google client id>'
+  raa.google_client_secret = '<your Google client secret>'
+  raa.google_redirect_uri = '<your app redirect uri>'
+
 end
 
 ```
