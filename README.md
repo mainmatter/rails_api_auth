@@ -12,13 +12,16 @@ authorize requests coming in from clients.
 
 ## Installation
 
-To install the engine simply add
+To install the engine simply add to the application's `Gemfile`
 
 ```ruby
 gem 'rails_api_auth'
 ```
 
-to the application's `Gemfile` and run `bundle install`.
+ and run:
+```bash
+bundle install
+```
 
 __Rails API Auth also adds a migration__ to the application so run
 
@@ -148,7 +151,6 @@ RailsApiAuth.tap do |raa|
   # Facebook configurations
   raa.facebook_app_id       = '<your Facebook app id>'
   raa.facebook_app_secret   = '<your Facebook app secret>'
-  raa.facebook_graph_url    = 'https://graph.facebook.com'
   raa.facebook_redirect_uri = '<your Facebook app redirect uri>'
 
   # Google configurations
