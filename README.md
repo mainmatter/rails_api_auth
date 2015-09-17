@@ -139,6 +139,8 @@ end
 
 ```
 
+See the [demo project](https://github.com/simplabs/rails_api_auth-demo) for further details.
+
 ## Configuration
 
 The Engine can be configured by simply setting some attributes on its main
