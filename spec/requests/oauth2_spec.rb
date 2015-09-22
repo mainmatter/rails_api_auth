@@ -43,7 +43,7 @@ describe 'Oauth2 API' do
 
       let(:params)                { { grant_type: 'facebook_auth_code', auth_code: 'authcode' } }
       let(:facebook_email)        { login.identification }
-      let(:facebook_data) do
+      let(:authenticated_user_data) do
         {
           id:    '1238190321',
           email: facebook_email
@@ -54,7 +54,7 @@ describe 'Oauth2 API' do
         it 'connects the login to the Facebook account' do
           subject
 
-          expect(login.reload.uid).to eq(facebook_data[:id])
+          expect(login.reload.uid).to eq(authenticated_user_data[:id])
         end
 
         it 'responds with status 200' do
@@ -131,7 +131,7 @@ describe 'Oauth2 API' do
 
       let(:params) { { grant_type: 'google_auth_code', auth_code: 'authcode' } }
       let(:email) { login.identification }
-      let(:google_data) do
+      let(:authenticated_user_data) do
         {
           sub: '1238190321',
           email: email
@@ -142,7 +142,7 @@ describe 'Oauth2 API' do
         it 'connects the login to the Google account' do
           subject
 
-          expect(login.reload.uid).to eq(google_data[:sub])
+          expect(login.reload.uid).to eq(authenticated_user_data[:sub])
         end
 
         it 'responds with status 200' do
