@@ -36,4 +36,9 @@ module RailsApiAuth
   # The Google App's redirect URI.
   mattr_accessor :google_redirect_uri
 
+  # @!attribute [rw] primary_key_type
+  # Configures database column type used for primary keys,
+  # currently only accepts :uuid
+  mattr_accessor :primary_key_type
+
 end
