@@ -16,8 +16,8 @@ class CreateLogins < ActiveRecord::Migration
 
   private
 
-  def primary_key_options(option_name)
-    RailsApiAuth.primary_key_type ? { option_name => RailsApiAuth.primary_key_type } : {}
-  end
+    def primary_key_options(option_name)
+      RailsApiAuth.primary_key_type ? { option_name => RailsApiAuth.primary_key_type } : {}
+    end
 
 end
