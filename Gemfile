@@ -17,6 +17,7 @@ end
 
 group :development do
   gem 'appraisal'
+  gem 'rubocop'
   gem 'guard-rubocop'
   gem 'guard-rspec', require: false
   gem 'guard-bundler', require: false

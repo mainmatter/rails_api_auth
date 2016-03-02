@@ -6,9 +6,9 @@ require 'pry'
 # @!visibility private
 class FacebookAuthenticator < BaseAuthenticator
 
-  PROVIDER = 'facebook'
-  TOKEN_URL = 'https://graph.facebook.com/v2.4/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&code=%{auth_code}&redirect_uri=%{redirect_uri}'
-  PROFILE_URL = 'https://graph.facebook.com/v2.4/me?fields=email,name&access_token=%{access_token}'
+  PROVIDER = 'facebook'.freeze
+  TOKEN_URL = 'https://graph.facebook.com/v2.4/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&code=%{auth_code}&redirect_uri=%{redirect_uri}'.freeze
+  PROFILE_URL = 'https://graph.facebook.com/v2.4/me?fields=email,name&access_token=%{access_token}'.freeze
 
   private
 

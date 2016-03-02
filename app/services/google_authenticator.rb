@@ -5,9 +5,9 @@ require 'httparty'
 # @!visibility private
 class GoogleAuthenticator < BaseAuthenticator
 
-  PROVIDER = 'google'
-  TOKEN_URL = 'https://www.googleapis.com/oauth2/v3/token'
-  PROFILE_URL = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect?access_token=%{access_token}'
+  PROVIDER = 'google'.freeze
+  TOKEN_URL = 'https://www.googleapis.com/oauth2/v3/token'.freeze
+  PROFILE_URL = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect?access_token=%{access_token}'.freeze
 
   private
 

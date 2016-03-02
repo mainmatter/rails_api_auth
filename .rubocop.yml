@@ -1,5 +1,4 @@
 AllCops:
-  RunRailsCops: true
   Include:
     - '**/Rakefile'
   Exclude:
@@ -7,6 +6,9 @@ AllCops:
     - 'vendor/**/*'
     - 'gemfiles/vendor/**/*'
     - 'spec/dummy/db/schema.rb'
+
+Rails:
+  Enabled: true
 
 Style/AlignHash:
   EnforcedHashRocketStyle: table

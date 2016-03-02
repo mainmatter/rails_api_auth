@@ -95,11 +95,11 @@ module RailsApiAuth
 
       private
 
-        def authenticate!(&block)
+        def authenticate!(*)
           @current_login = Login.where(oauth2_token: bearer_token).first!
 
           if block_given?
-            head 401 unless block.call
+            head 401 unless yield
           else
             @current_login
           end

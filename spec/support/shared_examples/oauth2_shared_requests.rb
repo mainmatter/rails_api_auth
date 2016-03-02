@@ -7,7 +7,7 @@ shared_context 'oauth2 shared contexts' do
     it 'connects the login to the service account' do
       subject
 
-      expect(login.reload.uid).to eq(authenticated_user_data[uid_mapped_field.intern])
+      expect(login.reload.uid).to eq(authenticated_user_data[uid_mapped_field.to_sym])
     end
 
     it 'responds with status 200' do
