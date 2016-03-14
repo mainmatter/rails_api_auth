@@ -14,7 +14,7 @@
 #
 # The `Login` model also stores the Bearer token in the `oauth2_token`
 # attribute. The model also stores an additional Bearer token, the
-# `single_use_oauth2_token`, that can be used for implementing thinks like
+# `single_use_oauth2_token`, that can be used for implementing things like
 # password reset where you need to make sure that the provided token can only
 # be used once.
 class Login < ActiveRecord::Base
