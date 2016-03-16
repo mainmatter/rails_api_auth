@@ -1,5 +1,3 @@
-require 'rails_api_auth/authentication'
-
 class CustomAuthenticatedController < ApplicationController
 
   include RailsApiAuth::Authentication

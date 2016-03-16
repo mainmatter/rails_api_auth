@@ -1,5 +1,3 @@
-require 'rails_api_auth/authentication'
-
 class AccessOnceController < ApplicationController
 
   include RailsApiAuth::Authentication

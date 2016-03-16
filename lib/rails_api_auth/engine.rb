@@ -1,3 +1,5 @@
+require 'rails_api_auth/authentication'
+
 module RailsApiAuth
 
   # @!visibility private
