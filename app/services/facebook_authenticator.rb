@@ -1,5 +1,4 @@
 require 'httparty'
-require 'pry'
 
 # Handles Facebook authentication
 #
