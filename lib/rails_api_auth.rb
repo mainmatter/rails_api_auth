@@ -16,6 +16,10 @@ module RailsApiAuth
   # The Facebook App ID.
   mattr_accessor :facebook_app_id
 
+  # @!attribute [rw] force_ssl
+  # Force SSL for Oauth2Controller.
+  mattr_accessor :force_ssl
+
   # @!attribute [rw] facebook_app_secret
   # The Facebook App secret.
   mattr_accessor :facebook_app_secret

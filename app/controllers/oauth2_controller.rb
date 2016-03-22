@@ -5,6 +5,9 @@ require 'login_not_found'
 # @!visibility private
 class Oauth2Controller < ApplicationController
 
+  # Default to forcing SSL unless disabled
+  force_ssl if: -> { RailsApiAuth.force_ssl.nil? || RailsApiAuth.force_ssl }
+
   def create
     case params[:grant_type]
     when 'password'
