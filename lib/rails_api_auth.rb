@@ -41,4 +41,9 @@ module RailsApiAuth
   # currently only accepts :uuid
   mattr_accessor :primary_key_type
 
+  # @!attribute [rw] force_ssl
+  # Force SSL for Oauth2Controller.
+  mattr_accessor :force_ssl
+  self.force_ssl = true
+
 end
