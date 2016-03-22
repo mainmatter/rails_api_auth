@@ -1,3 +1,4 @@
+require 'httparty'
 require 'rails_api_auth/authentication'
 
 module RailsApiAuth
