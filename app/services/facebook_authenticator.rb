@@ -1,5 +1,3 @@
-require 'httparty'
-
 # Handles Facebook authentication
 #
 # @!visibility private

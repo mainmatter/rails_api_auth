@@ -1,10 +1,32 @@
 describe 'Oauth2 API' do
   let!(:login) { create(:login) }
 
+  before { RailsApiAuth.force_ssl = false }
+
   describe 'POST /token' do
     let(:params) { { grant_type: 'password', username: login.identification, password: login.password } }
 
     subject { post '/token', params }
+
+    context 'force_ssl' do
+      it 'responds with status 301 when not specified' do
+        RailsApiAuth.force_ssl = nil
+        subject
+        expect(response).to have_http_status(301)
+      end
+
+      it 'responds with status 301 when set to true' do
+        RailsApiAuth.force_ssl = true
+        subject
+        expect(response).to have_http_status(301)
+      end
+
+      it 'responds with status 200 when set to false' do
+        RailsApiAuth.force_ssl = false
+        subject
+        expect(response).to have_http_status(200)
+      end
+    end
 
     context 'for grant_type "password"' do
       context 'with valid login credentials' do

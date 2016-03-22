@@ -1,5 +1,3 @@
-require 'httparty'
-
 # Handles Google authentication
 #
 # @!visibility private
