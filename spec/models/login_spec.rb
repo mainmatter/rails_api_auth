@@ -3,7 +3,19 @@ describe Login do
     expect(subject).to belong_to(:account).with_foreign_key(:user_id)
   end
 
-  it { is_expected.to validate_presence_of(:identification) }
+  subject { Login.new(identification: 'test@example.com', oauth2_token: 'token', single_use_oauth2_token: 'oldtoken') }
+
+  describe 'Login model validations' do
+    before do
+      Login.any_instance.stub(:ensure_oauth2_token).and_return(true)
+      Login.any_instance.stub(:assign_single_use_oauth2_token).and_return(true)
+    end
+
+    it { is_expected.to validate_presence_of(:identification) }
+    it { is_expected.to validate_uniqueness_of(:identification) }
+    it { is_expected.to validate_uniqueness_of(:oauth2_token) }
+    it { is_expected.to validate_uniqueness_of(:single_use_oauth2_token) }
+  end
 
   it 'validates presence of either password or Facebook UID' do
     login = described_class.new(identification: 'test@example.com', oauth2_token: 'token')
