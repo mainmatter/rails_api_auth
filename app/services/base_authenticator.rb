@@ -13,7 +13,9 @@ class BaseAuthenticator
     if login.present?
       connect_login_to_account(login, user)
     else
-      login = create_login_from_account(user)
+      user_model = create_user
+      user_model.login = create_login_from_account(user)
+      return user_model.login
     end
 
     login
@@ -33,6 +35,13 @@ class BaseAuthenticator
         raise ApiError.new
       end
       response
+    end
+
+    def create_user
+      user_model = RailsApiAuth.user_model_relation.to_s.classify.constantize.new
+      user_model.build_login
+      user_model.save
+      return user_model
     end
 
 end
