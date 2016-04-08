@@ -22,7 +22,7 @@ class FacebookAuthenticator < BaseAuthenticator
         provider: PROVIDER
       }
 
-      Login.create!(login_attributes)
+      Login.find_or_create_by!(login_attributes)
     end
 
     def access_token
