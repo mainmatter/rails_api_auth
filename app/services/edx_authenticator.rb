@@ -7,9 +7,7 @@ class EdxAuthenticator < BaseAuthenticator
 
   PROVIDER = 'edx'.freeze
   TOKEN_URL = 'http://0.0.0.0:8000/oauth2/access_token'.freeze
-  #PROFILE_URL = 'http://0.0.0.0:8000/api/user/v1/accounts/{username}/%{username}/?access_token=%{access_token}'.freeze
   PROFILE_URL = 'http://0.0.0.0:8000/api/user/v1/accounts/%{username}'.freeze
-  #/oauth2/authorize/?client_id=test&state=3835661&redirect_uri=http://0.0.0.0:8000&response_type=code
   AUTHORIZATION_URL = 'http://0.0.0.0:8000/oauth2/authorize/'
 
   def initialize(username, auth_code)
