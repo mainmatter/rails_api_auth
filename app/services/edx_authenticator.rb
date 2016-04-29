@@ -6,9 +6,8 @@ require 'httparty'
 class EdxAuthenticator < BaseAuthenticator
 
   PROVIDER = 'edx'.freeze
-  TOKEN_URL = 'http://0.0.0.0:8000/oauth2/access_token'.freeze
-  PROFILE_URL = 'http://0.0.0.0:8000/api/user/v1/accounts/%{username}'.freeze
-  AUTHORIZATION_URL = 'http://0.0.0.0:8000/oauth2/authorize/'
+  TOKEN_URL = 'https://%{edx_domain}/oauth2/access_token'.freeze
+  PROFILE_URL = 'https://%{RailsApiAuth.edx_domain}/api/user/v1/accounts/%{username}'.freeze
 
   def initialize(username, auth_code)
     @auth_code = auth_code
@@ -32,7 +31,7 @@ class EdxAuthenticator < BaseAuthenticator
     end
 
     def access_token
-      response = HTTParty.post(TOKEN_URL, token_options)
+      response = HTTParty.post(TOKEN_URL % { edx_domain: RailsApiAuth.edx_domain }, token_options)
       response.parsed_response['access_token']
     end
 
@@ -55,7 +54,7 @@ class EdxAuthenticator < BaseAuthenticator
     end
 
     def user_url
-      PROFILE_URL % { username: @username }
+      PROFILE_URL % { edx_domain: RailsApiAuth.edx_domain, username: @username }
     end
 
     def token_options
