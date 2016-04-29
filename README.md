@@ -156,21 +156,21 @@ RailsApiAuth.tap do |raa|
   raa.facebook_redirect_uri = '<your Facebook app redirect uri>'
 
   # Google configurations
-  raa.google_client_id = '<your Google client id>'
+  raa.google_client_id     = '<your Google client id>'
   raa.google_client_secret = '<your Google client secret>'
-  raa.google_redirect_uri = '<your app redirect uri>'
+  raa.google_redirect_uri  = '<your app redirect uri>'
 
-	# Edx configurations
-  raa.edx_client_id      = '<your Edx client id>'
-  raa.edx_client_secret  = '<your Edx client secret>'
-  raa.edx_domain         = '<your Edx app domain>'
-  raa.edx_redirect_uri   = 'your Edx app redirect uri'
+  # Edx configurations
+  raa.edx_client_id     = '<your Edx client id>'
+  raa.edx_client_secret = '<your Edx client secret>'
+  raa.edx_domain        = '<your Edx app domain>'
+  raa.edx_redirect_uri  = 'your Edx app redirect uri'
 
 end
 
 ```
 
-## A note on Edx Oauth2 code flows
+### A note on Edx Oauth2 code flows
 
 It is nesescary to include the Edx username in the when making a call
 rails_api_auth call /token. When rails_api_auth interfaces with Edx's
