@@ -170,6 +170,23 @@ end
 
 ```
 
+## A note on Edx Oauth2 code flows
+
+It is nesescary to include the Edx username in the when making a call
+rails_api_auth call /token. When rails_api_auth interfaces with Edx's
+user api, the username is need to retrieve user data, not just a valid
+oauth2 token. 
+
+E.g.
+
+```ruby
+headers = {
+	username: "alice", 
+	auth_code: "alices_authorization_code", 
+	grant_type: "edx_auth_code"
+}
+```
+
 ## Contribution
 
 See [CONTRIBUTING](https://github.com/simplabs/rails_api_auth/blob/master/CONTRIBUTING).
