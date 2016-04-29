@@ -68,6 +68,18 @@ describe 'Oauth2 API' do
         include_examples 'oauth2 shared contexts'
       end
 
+      context 'for grant_type "edx_auth_code"' do
+        let(:authenticated_user_data) do
+          {
+            sub: 'user',
+            email: email
+          }
+        end
+
+        include_context 'stubbed edx requests'
+        include_example 'oauth2 shared contexts'
+      end
+
       context 'for an unknown grant type' do
         let(:params) { { grant_type: 'UNKNOWN' } }
 
