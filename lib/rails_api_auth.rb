@@ -48,6 +48,10 @@ module RailsApiAuth
   # The Google App's redirect URI.
   mattr_accessor :edx_redirect_uri
 
+  # @!attribute [rw] edx_domain
+  # The domain used for the oauth2 provider
+  mattr_accessor :edx_domain
+
   # @!attribute [rw] primary_key_type
   # Configures database column type used for primary keys,
   # currently only accepts :uuid
@@ -56,6 +60,6 @@ module RailsApiAuth
   # @!attribute [rw] force_ssl
   # Force SSL for Oauth2Controller; defaults to `true`
   mattr_accessor :force_ssl
-  self.force_ssl = false#true
+  self.force_ssl = true
 
 end
