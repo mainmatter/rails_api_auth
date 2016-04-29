@@ -49,7 +49,7 @@ module RailsApiAuth
   mattr_accessor :edx_redirect_uri
 
   # @!attribute [rw] edx_domain
-  # The domain used for the oauth2 provider
+  # The domain used for the Edx oauth2 provider
   mattr_accessor :edx_domain
 
   # @!attribute [rw] primary_key_type
