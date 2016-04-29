@@ -115,9 +115,8 @@ module RailsApiAuth
         end
 
         def bearer_token
-          k = 'Authorization'
-          auth = request.headers[k] ? request.headers[k] : request.query_parameters[k]
-          auth ? auth.split(' ').last : nil
+          auth_header = request.headers['Authorization']
+          auth_header ? auth_header.split(' ').last : nil
         end
     end
 

@@ -7,7 +7,7 @@ class EdxAuthenticator < BaseAuthenticator
 
   PROVIDER = 'edx'.freeze
   TOKEN_URL = 'https://%{edx_domain}/oauth2/access_token'.freeze
-  PROFILE_URL = 'https://%{RailsApiAuth.edx_domain}/api/user/v1/accounts/%{username}'.freeze
+  PROFILE_URL = 'https://%{edx_domain}/api/user/v1/accounts/%{username}'.freeze
 
   def initialize(username, auth_code)
     @auth_code = auth_code
