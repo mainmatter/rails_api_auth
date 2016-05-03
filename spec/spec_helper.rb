@@ -2,8 +2,10 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
 SimpleCov.start do ||
-  minimum_coverage 95
-  refuse_coverage_drop
+  unless defined?(JRUBY_VERSION) || defined?(JRuby)
+    minimum_coverage 95
+    refuse_coverage_drop
+  end
 end
 
 require File.expand_path('../dummy/config/environment.rb', __FILE__)
