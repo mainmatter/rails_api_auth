@@ -8,5 +8,5 @@ describe EdxAuthenticator do
     }
   end
   include_context 'stubbed edx requests'
-  it_behaves_like 'an edx authenticator'
+  it_behaves_like 'a authenticator'
 end
