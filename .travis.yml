@@ -4,7 +4,6 @@ rvm:
   - 2.2.4
   - 2.3.0
   - jruby-9.0.5.0
-  - rbx
 
 gemfile:
   - gemfiles/rails_3.gemfile
