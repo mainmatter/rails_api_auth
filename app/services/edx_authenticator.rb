@@ -1,6 +1,6 @@
 require 'httparty'
 
-# Handles Google authentication
+# Handles Edx authentication
 #
 # @!visibility private
 class EdxAuthenticator < BaseAuthenticator
