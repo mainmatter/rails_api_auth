@@ -3,10 +3,10 @@ describe EdxAuthenticator do
 
   let(:authenticated_user_data) do
     {
-      email: 'user@gmail.com',
-      sub: 'user'
+      email: 'user@edxdomain.org',
+      uid: 'user'
     }
   end
   include_context 'stubbed edx requests'
-  it_behaves_like 'a authenticator'
+  it_behaves_like 'an edx authenticator'
 end

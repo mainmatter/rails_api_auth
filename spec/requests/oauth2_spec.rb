@@ -75,6 +75,9 @@ describe 'Oauth2 API' do
             email: email
           }
         end
+        let(:uid_mapped_field) { 'sub' }
+        let(:grant_type) { 'edx_auth_code' }
+        let(:profile_url) { EdxAuthenticator::PROFILE_URL }
 
         include_context 'stubbed edx requests'
         include_example 'oauth2 shared contexts'
