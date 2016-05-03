@@ -8,4 +8,10 @@ RailsApiAuth.tap do |raa|
   raa.google_client_id = 'google_client_id'
   raa.google_client_secret = 'google_client_secret'
   raa.google_redirect_uri = 'google_redirect_uri'
+
+  raa.edx_client_id      = 'edx_client_id'
+  raa.edx_client_secret  = 'edx_client_secret'
+  raa.edx_domain         = 'edxdomain.org'
+  raa.edx_redirect_uri   = 'edx_redirect_uri'
+
 end
