@@ -33,9 +33,9 @@ class Login < ActiveRecord::Base
     has_secure_password
   end
 
-  validates :identification, presence: true
-  validates :oauth2_token, presence: true
-  validates :single_use_oauth2_token, presence: true
+  validates :identification, presence: true, uniqueness: true
+  validates :oauth2_token, presence: true, uniqueness: true
+  validates :single_use_oauth2_token, presence: true, uniqueness: true
   validates :password, length: { maximum: 72 }, confirmation: true
   validate :password_or_uid_present
 
