@@ -6,7 +6,7 @@ shared_context 'stubbed edx requests' do
   let(:response_with_user)  { { body: JSON.generate(authenticated_user_data), headers: { 'Content-Type' => 'application/json' } } }
 
   before do
-    stub_request(:post, EdxAuthenticator::TOKEN_URL % { edx_domain: 'edxdomain.org'}).
+    stub_request(:post, EdxAuthenticator::TOKEN_URL % { edx_domain: 'edxdomain.org' }).
       with(body: hash_including(grant_type: 'authorization_code')).to_return(response_with_token)
     stub_request(:get, EdxAuthenticator::PROFILE_URL % { edx_domain: 'edxdomain.org', username: 'user' }).to_return(response_with_user)
   end
