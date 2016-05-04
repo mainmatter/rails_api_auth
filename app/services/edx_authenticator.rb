@@ -37,7 +37,7 @@ class EdxAuthenticator < BaseAuthenticator
 
     # Override base authenticator
     def get_request(url, headers)
-      response = HTTParty.get(url, :headers => headers)
+      response = HTTParty.get(url, headers: headers)
       unless response.code == 200
         Rails.logger.warn "#{self.class::PROVIDER} API request failed with status #{response.code}."
         Rails.logger.debug "#{self.class::PROVIDER} API error response was:\n#{response.body}"
@@ -47,7 +47,7 @@ class EdxAuthenticator < BaseAuthenticator
     end
 
     def get_user(access_token)
-      headers = { "Authorization" => "Bearer #{access_token}" }
+      headers = { 'Authorization' => "Bearer #{access_token}" }
       @edx_user ||= begin
         get_request(user_url, headers).parsed_response.symbolize_keys
       end

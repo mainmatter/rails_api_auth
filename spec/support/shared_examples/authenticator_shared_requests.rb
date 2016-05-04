@@ -2,7 +2,7 @@ shared_examples 'a authenticator' do
   describe '#authenticate!' do
     let(:login) { double('login') }
 
-    if described_class::PROVIDER.eql? "edx"
+    if described_class::PROVIDER.eql? 'edx'
       subject { described_class.new(username, auth_code).authenticate! }
     else
       subject { described_class.new(auth_code).authenticate! }
