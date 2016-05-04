@@ -13,5 +13,4 @@ RailsApiAuth.tap do |raa|
   raa.edx_client_secret = 'edx_client_secret'
   raa.edx_domain        = 'edxdomain.org'
   raa.edx_redirect_uri  = 'edx_redirect_uri'
-
 end
