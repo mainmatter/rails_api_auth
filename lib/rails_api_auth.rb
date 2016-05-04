@@ -61,4 +61,5 @@ module RailsApiAuth
   # Force SSL for Oauth2Controller; defaults to `true`
   mattr_accessor :force_ssl
   self.force_ssl = true
+
 end
