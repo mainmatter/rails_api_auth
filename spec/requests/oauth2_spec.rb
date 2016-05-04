@@ -80,7 +80,7 @@ describe 'Oauth2 API' do
         let(:profile_url) { EdxAuthenticator::PROFILE_URL }
 
         include_context 'stubbed edx requests'
-        include_example 'oauth2 shared contexts'
+        include_examples 'oauth2 shared contexts'
       end
 
       context 'for an unknown grant type' do
