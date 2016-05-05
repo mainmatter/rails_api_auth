@@ -18,7 +18,7 @@ class EdxAuthenticator < BaseAuthenticator
   private
 
     def connect_login_to_account(login, user)
-      login.update_attributes!(uid: user[:sub], provider: PROVIDER)
+      login.update_attributes!(uid: user[:username], provider: PROVIDER)
     end
 
     def create_login_from_account(user)
