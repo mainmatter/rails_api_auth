@@ -72,7 +72,8 @@ class Oauth2Controller < ApplicationController
 
     def authenticate_with_edx(username, auth_code)
       oauth2_error('no_authorization_code') && return unless auth_code.present?
-      oauth2_error('no_username') && return unless username.present?
+      puts "_____________________________________________________"
+      #oauth2_error('no_username') && return unless username.present?
       login = EdxAuthenticator.new(username, auth_code).authenticate!
 
       render json: { access_token: login.oauth2_token }

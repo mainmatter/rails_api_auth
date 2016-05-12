@@ -27,7 +27,6 @@ class EdxAuthenticator < BaseAuthenticator
         uid: user[:username],
         provider: PROVIDER
       }
-
       Login.create!(login_attributes)
     end
 

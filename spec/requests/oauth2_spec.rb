@@ -71,16 +71,16 @@ describe 'Oauth2 API' do
       context 'for grant_type "edx_auth_code"' do
         let(:authenticated_user_data) do
           {
-            sub: 'user',
+            username: 'user',
             email: email
           }
         end
-        let(:uid_mapped_field) { 'sub' }
+        let(:uid_mapped_field) { 'username' }
         let(:grant_type) { 'edx_auth_code' }
         let(:profile_url) { EdxAuthenticator::PROFILE_URL }
 
         include_context 'stubbed edx requests'
-        include_examples 'oauth2 shared contexts'
+        include_examples 'oauth2 edx shared contexts'
       end
 
       context 'for an unknown grant type' do

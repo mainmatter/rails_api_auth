@@ -1,10 +1,10 @@
 describe EdxAuthenticator do
-  let(:uid_mapped_field) { 'sub' }
+  let(:uid_mapped_field) { 'username' }
 
   let(:authenticated_user_data) do
     {
       email: 'user@edxdomain.org',
-      uid: 'user'
+      username: 'user'
     }
   end
   include_context 'stubbed edx requests'
