@@ -1,5 +1,5 @@
 shared_context 'oauth2 edx shared contexts' do
-  let(:params)                { { grant_type: grant_type, auth_code: 'authcode' } }
+  let(:params)                { { username: 'user', grant_type: grant_type, auth_code: 'authcode' } }
   let(:access_token) { 'access_token' }
   let(:email) { login.identification }
   let(:username) { 'user' }
@@ -26,7 +26,6 @@ shared_context 'oauth2 edx shared contexts' do
     let(:email) { Faker::Internet.email }
 
     it 'responds with status 200' do
-      puts "++++++++++++++++++++++++++++++++++++"
       subject
       expect(response).to have_http_status(200)
     end
@@ -61,7 +60,7 @@ shared_context 'oauth2 edx shared contexts' do
 
   context 'when service responds with an error' do
     before do
-      stub_request(:get, profile_url % { username: '', access_token: access_token }).to_return(status: 422)
+      stub_request(:get, profile_url % { username: 'user', access_token: access_token }).to_return(status: 422)
     end
 
     it 'responds with status 502' do

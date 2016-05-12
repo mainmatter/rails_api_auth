@@ -1,5 +1,5 @@
 shared_context 'oauth2 shared contexts' do
-  let(:params)                { { grant_type: grant_type, auth_code: 'authcode' } }
+  let(:params)                { { username: 'user', grant_type: grant_type, auth_code: 'authcode' } }
   let(:access_token) { 'access_token' }
   let(:email) { login.identification }
 

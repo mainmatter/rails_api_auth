@@ -8,8 +8,8 @@ shared_context 'stubbed edx requests' do
   before do
     stub_request(:post, EdxAuthenticator::TOKEN_URL).
       with(body: hash_including(grant_type: 'authorization_code')).to_return(response_with_token)
-    stub_request(:get, EdxAuthenticator::PROFILE_URL % { username: 'user' }).to_return(response_with_user)
-    stub_request(:get, EdxAuthenticator::PROFILE_URL % { username: '' }).with(:headers => {'Authorization'=>'Bearer access_token'}).to_return(response_with_user)
+    #stub_request(:get, EdxAuthenticator::PROFILE_URL % { username: 'user' }).to_return(response_with_user)
+    stub_request(:get, EdxAuthenticator::PROFILE_URL % { username: username }).with(:headers => {'Authorization'=>'Bearer access_token'}).to_return(response_with_user)
 
   end
 end
