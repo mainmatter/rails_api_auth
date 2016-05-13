@@ -1,8 +1,7 @@
 shared_context 'oauth2 edx shared contexts' do
-  let(:params)                { { username: 'user', grant_type: grant_type, auth_code: 'authcode' } }
+  let(:params)                { { username: username, grant_type: grant_type, auth_code: 'authcode' } }
   let(:access_token) { 'access_token' }
   let(:email) { login.identification }
-  let(:username) { 'user' }
 
   context 'when a login with for the service account exists' do
     it 'connects the login to the service account' do
@@ -55,6 +54,22 @@ shared_context 'oauth2 edx shared contexts' do
       subject
 
       expect(response.body).to be_json_eql({ error: 'no_authorization_code' }.to_json)
+    end
+  end
+
+  context 'when no username is sent' do
+    let(:params) { { auth_code: 'auth_code', grant_type: grant_type } }
+
+    it 'responds with status 400' do
+      subject
+
+      expect(response).to have_http_status(400)
+    end
+
+    it 'responds with a "no_username" error' do
+      subject
+
+      expect(response.body).to be_json_eql({ error: 'no_username' }.to_json)
     end
   end
 
