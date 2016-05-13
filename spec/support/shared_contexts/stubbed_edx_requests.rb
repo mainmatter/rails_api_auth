@@ -10,7 +10,7 @@ shared_context 'stubbed edx requests' do
       with(body: hash_including(grant_type: 'authorization_code')).to_return(response_with_token)
 
     stub_request(:get, EdxAuthenticator::PROFILE_URL % { username: username }).
-      with(headers: {'Authorization'=>'Bearer access_token'}).
+      with(headers: { 'Authorization'=>'Bearer access_token' }).
       to_return(response_with_user)
   end
 end
