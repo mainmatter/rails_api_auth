@@ -1,5 +1,5 @@
 shared_context 'oauth2 edx shared contexts' do
-  let(:params)                { { username: username, grant_type: grant_type, auth_code: 'authcode' } }
+  let(:params) { { username: username, grant_type: grant_type, auth_code: 'authcode' } }
   let(:access_token) { 'access_token' }
   let(:email) { login.identification }
 
