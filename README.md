@@ -160,6 +160,8 @@ RailsApiAuth.tap do |raa|
   raa.google_client_secret = '<your Google client secret>'
   raa.google_redirect_uri = '<your app redirect uri>'
 
+  # Force SSL for Oauth2Controller; defaults to `false` for the development environment, otherwise `true`
+  raa.force_ssl = false
 end
 
 ```
