@@ -58,8 +58,8 @@ module RailsApiAuth
   mattr_accessor :primary_key_type
 
   # @!attribute [rw] force_ssl
-  # Force SSL for Oauth2Controller; defaults to `true`
+  # Force SSL for Oauth2Controller; defaults to `false` for the development environment, otherwise `true`
   mattr_accessor :force_ssl
-  self.force_ssl = true
+  self.force_ssl = !Rails.env.development?
 
 end

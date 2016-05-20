@@ -166,6 +166,8 @@ RailsApiAuth.tap do |raa|
   raa.edx_domain        = '<your Edx app domain>'
   raa.edx_redirect_uri  = 'your Edx app redirect uri'
 
+  # Force SSL for Oauth2Controller; defaults to `false` for the development environment, otherwise `true`
+  raa.force_ssl = false
 end
 
 ```
