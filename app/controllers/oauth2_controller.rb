@@ -7,7 +7,7 @@ class Oauth2Controller < ApplicationController
 
   force_ssl if: -> { RailsApiAuth.force_ssl }
 
-  # rubocop:disable all
+  # rubocop:disable MethodLength
   def create
     case params[:grant_type]
     when 'password'
@@ -23,6 +23,7 @@ class Oauth2Controller < ApplicationController
     end
   end
 
+  # rubocop:enable MethodLength
   def destroy
     oauth2_error('unsupported_token_type') && return unless params[:token_type_hint] == 'access_token'
 
