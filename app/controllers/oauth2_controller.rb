@@ -7,6 +7,7 @@ class Oauth2Controller < ApplicationController
 
   force_ssl if: -> { RailsApiAuth.force_ssl }
 
+  # rubocop:disable all
   def create
     case params[:grant_type]
     when 'password'

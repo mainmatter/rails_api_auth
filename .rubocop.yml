@@ -44,9 +44,6 @@ Style/Documentation:
 Style/GuardClause:
   Enabled: false
 
-Metrics/MethodLength:
-  Enabled: false
-
 Metrics/LineLength:
   Enabled: false
 
