@@ -15,13 +15,6 @@ class Oauth2Controller < ApplicationController
       authenticate_with_facebook(params[:auth_code])
     when 'google_auth_code'
       authenticate_with_google(params[:auth_code])
-    else
-      other_authenticators
-    end
-  end
-
-  def other_authenticators
-    case params[:grant_type]
     when 'edx_auth_code'
       authenticate_with_edx(params[:username], params[:auth_code])
     else

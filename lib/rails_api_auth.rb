@@ -37,15 +37,15 @@ module RailsApiAuth
   mattr_accessor :google_redirect_uri
 
   # @!attribute [rw] edx_client_id
-  # The Google client ID.
+  # The Edx client ID.
   mattr_accessor :edx_client_id
 
   # @!attribute [rw] edx_client_secret
-  # The Google client secret.
+  # The Edx client secret.
   mattr_accessor :edx_client_secret
 
   # @!attribute [rw] edx_redirect_uri
-  # The Google App's redirect URI.
+  # The Edx App's redirect URI.
   mattr_accessor :edx_redirect_uri
 
   # @!attribute [rw] edx_domain
