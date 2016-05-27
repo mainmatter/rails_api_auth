@@ -36,6 +36,22 @@ module RailsApiAuth
   # The Google App's redirect URI.
   mattr_accessor :google_redirect_uri
 
+  # @!attribute [rw] edx_client_id
+  # The Edx client ID.
+  mattr_accessor :edx_client_id
+
+  # @!attribute [rw] edx_client_secret
+  # The Edx client secret.
+  mattr_accessor :edx_client_secret
+
+  # @!attribute [rw] edx_redirect_uri
+  # The Edx App's redirect URI.
+  mattr_accessor :edx_redirect_uri
+
+  # @!attribute [rw] edx_domain
+  # The domain used for the Edx oauth2 provider
+  mattr_accessor :edx_domain
+
   # @!attribute [rw] primary_key_type
   # Configures database column type used for primary keys,
   # currently only accepts :uuid
