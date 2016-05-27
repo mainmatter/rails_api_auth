@@ -1,12 +1,6 @@
-shared_examples 'a authenticator' do
+shared_examples 'an authenticator' do
   describe '#authenticate!' do
     let(:login) { double('login') }
-
-    if described_class::PROVIDER.eql? 'edx'
-      subject { described_class.new(username, auth_code).authenticate! }
-    else
-      subject { described_class.new(auth_code).authenticate! }
-    end
 
     context "when no login for the #{described_class::PROVIDER} account exists" do
       let(:login_attributes) do

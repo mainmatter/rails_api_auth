@@ -22,8 +22,8 @@ class Oauth2Controller < ApplicationController
       oauth2_error('unsupported_grant_type')
     end
   end
-
   # rubocop:enable MethodLength
+
   def destroy
     oauth2_error('unsupported_token_type') && return unless params[:token_type_hint] == 'access_token'
 

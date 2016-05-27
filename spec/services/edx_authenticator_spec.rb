@@ -7,6 +7,9 @@ describe EdxAuthenticator do
       username: 'user'
     }
   end
+
+  subject { EdxAuthenticator.new(username, auth_code).authenticate! }
+
   include_context 'stubbed edx requests'
-  it_behaves_like 'a authenticator'
+  it_behaves_like 'an authenticator'
 end

@@ -46,11 +46,15 @@ describe 'Oauth2 API' do
           }
         end
         let(:uid_mapped_field) { 'id' }
-        let(:grant_type) { 'facebook_auth_code' }
-        let(:profile_url) { FacebookAuthenticator::PROFILE_URL }
 
         include_context 'stubbed facebook requests'
-        include_examples 'oauth2 shared contexts'
+        include_examples 'an oauth2 auth_code flow' do
+          let(:grant_type) { 'facebook_auth_code' }
+          let(:params) { { grant_type: grant_type, auth_code: 'authcode' } }
+
+          let(:authenticator) { FacebookAuthenticator }
+          let(:error_class) { FacebookAuthenticator::ApiError }
+        end
       end
 
       context 'for grant_type "google_auth_code"' do
@@ -61,11 +65,15 @@ describe 'Oauth2 API' do
           }
         end
         let(:uid_mapped_field) { 'sub' }
-        let(:grant_type) { 'google_auth_code' }
-        let(:profile_url) { GoogleAuthenticator::PROFILE_URL }
 
         include_context 'stubbed google requests'
-        include_examples 'oauth2 shared contexts'
+        include_examples 'an oauth2 auth_code flow' do
+          let(:grant_type) { 'google_auth_code' }
+          let(:params) { { grant_type: grant_type, auth_code: 'authcode' } }
+
+          let(:authenticator) { GoogleAuthenticator }
+          let(:error_class) { GoogleAuthenticator::ApiError }
+        end
       end
 
       context 'for grant_type "edx_auth_code"' do
@@ -76,11 +84,31 @@ describe 'Oauth2 API' do
           }
         end
         let(:uid_mapped_field) { 'username' }
-        let(:grant_type) { 'edx_auth_code' }
-        let(:profile_url) { EdxAuthenticator::PROFILE_URL }
 
         include_context 'stubbed edx requests'
-        include_examples 'oauth2 edx shared contexts'
+        include_examples 'an oauth2 auth_code flow' do
+          let(:grant_type) { 'edx_auth_code' }
+          let(:params) { { grant_type: grant_type, auth_code: 'authcode', username: 'username' } }
+
+          let(:authenticator) { EdxAuthenticator }
+          let(:error_class) { EdxAuthenticator::ApiError }
+        end
+
+        context 'when no username is sent' do
+          let(:params) { { auth_code: 'auth_code', grant_type: grant_type } }
+
+          it 'responds with status 400' do
+            subject
+
+            expect(response).to have_http_status(400)
+          end
+
+          it 'responds with a "no_username" error' do
+            subject
+
+            expect(response.body).to be_json_eql({ error: 'no_username' }.to_json)
+          end
+        end
       end
 
       context 'for an unknown grant type' do

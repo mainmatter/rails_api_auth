@@ -7,6 +7,9 @@ describe GoogleAuthenticator do
       sub: '789789789789'
     }
   end
+
+  subject { GoogleAuthenticator.new(auth_code).authenticate! }
+
   include_context 'stubbed google requests'
-  it_behaves_like 'a authenticator'
+  it_behaves_like 'an authenticator'
 end

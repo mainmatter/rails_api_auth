@@ -172,21 +172,13 @@ end
 
 ```
 
-### A note on Edx Oauth2 code flows
+### A note on the Edx auth code flow
 
-It is nesescary to include the Edx username in the request when making a call
-rails_api_auth call /token. When rails_api_auth interfaces with Edx's
-user api, the username is need to retrieve user data, not just a valid
-oauth2 token.
+Edx requires the Edx username to be included in the authentication data
+alongside the `auth_code`, e.g.:
 
-E.g.
-
-```ruby
-headers = {
-  username: "alice",
-  auth_code: "alices_authorization_code",
-  grant_type: "edx_auth_code"
-}
+```bash
+curl -d "grant_type=edx_auth_code&username=<Edx username>&auth_code=<auth code>" "http://localhost:3000/token"
 ```
 
 ## Contribution

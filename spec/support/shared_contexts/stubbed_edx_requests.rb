@@ -1,6 +1,6 @@
 shared_context 'stubbed edx requests' do
   let(:auth_code) { 'authcode' }
-  let(:username)  { 'user' }
+  let(:username)  { 'username' }
 
   let(:response_with_token) { { body: '{ "access_token": "access_token" },  "token_type": "Bearer", "expires_in": 3600' } }
   let(:response_with_user)  { { body: JSON.generate(authenticated_user_data), headers: { 'Content-Type' => 'application/json' } } }
