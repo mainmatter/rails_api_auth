@@ -191,7 +191,7 @@ headers = {
 
 ## Contribution
 
-See [CONTRIBUTING](https://github.com/simplabs/rails_api_auth/blob/master/CONTRIBUTING).
+See [CONTRIBUTING](https://github.com/simplabs/rails_api_auth/blob/master/CONTRIBUTING.md).
 
 ## License
 
