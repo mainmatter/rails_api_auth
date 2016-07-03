@@ -22,7 +22,10 @@ gem 'rails_api_auth'
 ```bash
 bundle install
 ```
-
+ Generate migrations :
+```bash
+rake rails_api_auth:install:migrations
+```
 __Rails API Auth also adds a migration__ to the application so run
 
 ```bash
