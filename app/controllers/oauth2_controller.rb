@@ -5,6 +5,8 @@ require 'login_not_found'
 # @!visibility private
 class Oauth2Controller < ApplicationController
 
+  PASSWORD_PROVIDER = 'password'.freeze
+
   force_ssl if: -> { RailsApiAuth.force_ssl }
 
   # rubocop:disable MethodLength
@@ -35,8 +37,8 @@ class Oauth2Controller < ApplicationController
 
   private
 
-    def authenticate_with_credentials(identification, password)
-      login = Login.where(identification: identification).first || LoginNotFound.new
+    def authenticate_with_credentials(identification, password, provider = PASSWORD_PROVIDER)
+      login = Login.where(provider: provider, identification: identification).first || LoginNotFound.new
 
       if login.authenticate(password)
         render json: { access_token: login.oauth2_token }
