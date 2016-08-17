@@ -1,4 +1,4 @@
-class AddUniqueIndexToIdentification < ActiveRecord::Migration
+class AddClientToIdentification < ActiveRecord::Migration
 
   def change
     add_column :logins, :client, :string

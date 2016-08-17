@@ -1,4 +1,4 @@
-class AddUniqueIndexToIdentification < ActiveRecord::Migration
+class RemoveUniqueIndexFromIdentification < ActiveRecord::Migration
 
   def change
     remove_index :logins, :index_logins_on_identification
