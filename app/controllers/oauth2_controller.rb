@@ -5,7 +5,10 @@ require 'login_not_found'
 # @!visibility private
 class Oauth2Controller < ApplicationController
 
-  DEFAULT_PROVIDER = 'password'.freeze
+  PASSWORD_PROVIDER = 'password'.freeze
+  FACEBOOK_PROVIDER = 'facebook'.freeze
+  GOOGLE_PROVIDER = 'google'.freeze
+  EDX_PROVIDER = 'edx'.freeze
   DEFAULT_CLIENT = 'unspecified'.freeze
 
   force_ssl if: -> { RailsApiAuth.force_ssl }
@@ -14,13 +17,13 @@ class Oauth2Controller < ApplicationController
   def create
     case params[:grant_type]
     when 'password'
-      authenticate_with_credentials(params[:username], params[:password])
+      authenticate_with_credentials(params[:username], params[:password], PASSWORD_PROVIDER, params[:accessing_application])
     when 'facebook_auth_code'
-      authenticate_with_facebook(params[:auth_code])
+      authenticate_with_facebook(params[:auth_code], FACEBOOK_PROVIDER, params[:accessing_application])
     when 'google_auth_code'
-      authenticate_with_google(params[:auth_code])
+      authenticate_with_google(params[:auth_code], GOOGLE_PROVIDER, params[:accessing_application])
     when 'edx_auth_code'
-      authenticate_with_edx(params[:username], params[:auth_code])
+      authenticate_with_edx(params[:username], params[:auth_code], EDX_PROVIDER, params[:accessing_application])
     else
       oauth2_error('unsupported_grant_type')
     end
@@ -38,7 +41,7 @@ class Oauth2Controller < ApplicationController
 
   private
 
-    def authenticate_with_credentials(identification, password, provider = DEFAULT_PROVIDER, client = DEFAULT_CLIENT)
+    def authenticate_with_credentials(identification, password, provider, client = DEFAULT_CLIENT)
       login = Login.where(provider: provider, identification: identification, client: client).first || LoginNotFound.new
 
       if login.authenticate(password)
