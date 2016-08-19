@@ -12,7 +12,6 @@ describe Login do
     end
 
     it { is_expected.to validate_presence_of(:identification) }
-    it { is_expected.to validate_uniqueness_of(:identification) }
     it { is_expected.to validate_uniqueness_of(:oauth2_token) }
     it { is_expected.to validate_uniqueness_of(:single_use_oauth2_token) }
   end
