@@ -6,7 +6,7 @@ require 'httparty'
 class EdxAuthenticator < BaseAuthenticator
 
   PROVIDER    = 'edx'.freeze
-  DOMAIN      = 'http://' + RailsApiAuth.edx_domain
+  DOMAIN      = 'http://' + ( RailsApiAuth.try(:edx_domain) || 'example.org' )
   TOKEN_URL   = (DOMAIN + '/oauth2/access_token').freeze
   PROFILE_URL = (DOMAIN + '/api/user/v1/accounts/%{username}').freeze
 
