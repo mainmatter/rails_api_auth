@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files      = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['spec/**/*']
 
-  s.add_dependency('rails', '>= 3.2.6', '< 5')
+  s.add_dependency('rails', '>= 3.2.6')
   s.add_dependency('bcrypt', '~> 3.1.7')
   s.add_dependency('httparty', '~> 0.13.3')
 end
