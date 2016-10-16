@@ -1,5 +1,5 @@
 describe 'an authenticated route' do
-  subject { get '/authenticated', {}, headers }
+  subject { get: '/authenticated', {}, headers }
 
   let(:headers) { {} }
 
