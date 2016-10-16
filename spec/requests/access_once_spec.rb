@@ -1,5 +1,5 @@
 describe 'an access-once route' do
-  subject { get: '/access-once', {}, headers }
+  subject { get '/access-once', {}, headers }
 
   let(:login) { create(:login) }
   let(:headers) do
@@ -52,7 +52,7 @@ describe 'an access-once route' do
 
   context 'when accessed a second time with the same token' do
     before do
-      get: '/access-once', {}, headers
+      get '/access-once', {}, headers
     end
 
     it_behaves_like 'when access is not allowed'

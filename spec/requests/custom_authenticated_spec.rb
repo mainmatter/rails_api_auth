@@ -1,5 +1,5 @@
 describe 'a custom authenticated route' do
-  subject { get: '/custom-authenticated', {}, headers }
+  subject { get '/custom-authenticated', {}, headers }
 
   let(:account) { create(:account) }
   let(:login)   { create(:login, account: account) }
