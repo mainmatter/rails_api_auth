@@ -41,6 +41,7 @@ After installing the engine you can add the relation from your user model to
 the `Login` model:
 
 ```ruby
+#app/models/user.rb
 class User < ActiveRecord::Base
 
   has_one :login # this could be has_many as well of course
@@ -52,6 +53,7 @@ When creating a new `User` in the host application, make sure to create a
 related `Login` as well, e.g.:
 
 ```ruby
+#app/controllers/users_controller.rb
 class UsersController < ApplicationController
 
   def create
@@ -93,6 +95,7 @@ request includes a valid Bearer token in the `Authorization` header (e.g.
 `Authorization: Bearer d5086ac8457b9db02a13`):
 
 ```ruby
+#app/controllers/authenticated_controller.rb
 class AuthenticatedController < ApplicationController
 
   include RailsApiAuth::Authentication
@@ -117,6 +120,7 @@ on the current login, e.g. making sure the login's associated account has a
 certain role:
 
 ```ruby
+#app/controllers/authenticated_controller.rb
 class AuthenticatedController < ApplicationController
 
   include RailsApiAuth::Authentication
@@ -139,6 +143,34 @@ end
 
 ```
 
+__Adding a current user endpoint is easy__ 
+
+Since the OAuth2 spec [access token](https://tools.ietf.org/html/rfc6749#section-5.1) doesn't define a place to send user information we usually have a special route `/users/me` where authenticated users receive their own user record. To add the  endpoint's route to your routes
+```ruby
+#config/routes.rb
+Rails.application.routes.draw do
+    get 'users/me', to 'users#me'
+end
+```
+Then in the user's controller `me` action find the user by its authentication token and return it.
+```ruby
+#app/controllers/users_controller.rb
+class UsersController < ApplicationController
+    before_action :authenticate!, only: :me
+    def me
+        user = @current_login.user
+        if user.nil?
+            render json: {'Invalid api token'}, status: 400
+        else
+            render json: user 
+            #or render as json:api for ember using the jsonapi-resources gem
+            #render json: JSONAPI::ResourceSerializer.new(UserResource).serialize_to_hash(UserResource.new(user, nil))
+        end
+    end
+end
+```
+If you are not using `user` as your `user_model_relation` you will need to change this a little bit, but is bassically the same. You can read how to setup your ember app to use this endpoint [here](https://github.com/simplabs/ember-simple-auth/blob/master/guides/managing-current-user.md) 
+
 See the [demo project](https://github.com/simplabs/rails_api_auth-demo) for further details.
 
 ## Configuration
@@ -147,6 +179,7 @@ The Engine can be configured by simply setting some attributes on its main
 module:
 
 ```ruby
+#config/initializers/rails_api_auth.rb
 RailsApiAuth.tap do |raa|
   raa.user_model_relation = :account # this will set up the belongs_to relation from the Login model to the Account model automatically (of course if your application uses a User model this would be :user)
 
@@ -174,9 +207,9 @@ end
 
 ### A note on Edx Oauth2 code flows
 
-It is nesescary to include the Edx username in the request when making a call
+It is necessary to include the Edx username in the request when making a call
 rails_api_auth call /token. When rails_api_auth interfaces with Edx's
-user api, the username is need to retrieve user data, not just a valid
+user api, the username needs to retrieve user data, not just a valid
 oauth2 token.
 
 E.g.
