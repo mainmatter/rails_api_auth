@@ -2,10 +2,18 @@ class CustomAuthenticatedController < ApplicationController
 
   include RailsApiAuth::Authentication
 
-  before_filter :authenticate_with_account!
+  if Rails::VERSION::MAJOR < 4
+    before_filter :authenticate_with_account!
+  else
+    before_action :authenticate_with_account!
+  end
 
   def index
-    render text: 'zuper content', status: 200
+    if Rails::VERSION::MAJOR < 4
+      render text: 'zuper content', status: 200
+    else
+      render plain: 'zuper content', status: 200
+    end
   end
 
   private

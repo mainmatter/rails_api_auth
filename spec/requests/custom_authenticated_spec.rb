@@ -1,11 +1,20 @@
 describe 'a custom authenticated route' do
-  subject { get '/custom-authenticated', {}, headers }
+  if Rails::VERSION::MAJOR < 5
+    # rubocop:disable Rails/HttpPositionalArguments
+    subject { get '/custom-authenticated', {}, headers }
+    # rubocop:enable Rails/HttpPositionalArguments
+    let(:headers) do
+      { 'Authorization' => "Bearer #{login.oauth2_token}" }
+    end
+  else
+    subject { get '/custom-authenticated', params: {}, headers: headers }
+    let(:headers) do
+      { HTTP_AUTHORIZATION: "Bearer #{login.oauth2_token}" }
+    end
+  end
 
   let(:account) { create(:account) }
   let(:login)   { create(:login, account: account) }
-  let(:headers) do
-    { 'Authorization' => "Bearer #{login.oauth2_token}" }
-  end
 
   context 'when the block returns true' do
     let(:account) { create(:account, first_name: 'user x') }

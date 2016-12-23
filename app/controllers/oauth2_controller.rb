@@ -52,7 +52,7 @@ class Oauth2Controller < ApplicationController
 
       render json: { access_token: login.oauth2_token }
     rescue FacebookAuthenticator::ApiError
-      render nothing: true, status: 502
+      head 502
     end
 
     def authenticate_with_google(auth_code)
@@ -62,7 +62,7 @@ class Oauth2Controller < ApplicationController
 
       render json: { access_token: login.oauth2_token }
     rescue GoogleAuthenticator::ApiError
-      render nothing: true, status: 502
+      head 502
     end
 
     def authenticate_with_edx(username, auth_code)
@@ -73,7 +73,7 @@ class Oauth2Controller < ApplicationController
 
       render json: { access_token: login.oauth2_token }
     rescue EdxAuthenticator::ApiError
-      render nothing: true, status: 502
+      head 502
     end
 
     def oauth2_error(error)

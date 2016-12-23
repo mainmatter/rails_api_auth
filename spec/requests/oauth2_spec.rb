@@ -3,7 +3,13 @@ describe 'Oauth2 API' do
 
   describe 'POST /token' do
     let(:params) { { grant_type: 'password', username: login.identification, password: login.password } }
-    subject { post '/token', params, 'HTTPS' => ssl }
+    if Rails::VERSION::MAJOR < 5
+      # rubocop:disable Rails/HttpPositionalArguments
+      subject { post '/token', params, 'HTTPS' => ssl }
+      # rubocop:enable Rails/HttpPositionalArguments
+    else
+      subject { post '/token', params: params, headers: { 'HTTPS' => ssl } }
+    end
 
     shared_examples 'when the request gets through' do
       context 'for grant_type "password"' do
@@ -141,7 +147,16 @@ describe 'Oauth2 API' do
 
   describe 'POST #destroy' do
     let(:params) { { token_type_hint: 'access_token', token: login.oauth2_token } }
-    subject { post '/revoke', params, 'HTTPS' => ssl }
+
+    if Rails::VERSION::MAJOR < 5
+      # rubocop:disable Rails/HttpPositionalArguments
+      subject { get '/access-once', {}, headers }
+      subject { post '/revoke', params, 'HTTPS' => ssl }
+      # rubocop:enable Rails/HttpPositionalArguments
+    else
+      subject { get '/access-once', params: {}, headers: headers }
+      subject { post '/revoke', params: params, headers: { 'HTTPS' => ssl } }
+    end
 
     shared_examples 'when the request gets through' do
       it 'responds with status 200' do

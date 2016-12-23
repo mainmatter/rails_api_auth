@@ -1,5 +1,11 @@
 describe 'an authenticated route' do
-  subject { get '/authenticated', {}, headers }
+  if Rails::VERSION::MAJOR < 5
+    # rubocop:disable Rails/HttpPositionalArguments
+    subject { get '/authenticated', {}, headers }
+    # rubocop:enable Rails/HttpPositionalArguments
+  else
+    subject { get '/authenticated', params: {}, headers: headers }
+  end
 
   let(:headers) { {} }
 
