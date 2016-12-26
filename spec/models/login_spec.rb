@@ -7,8 +7,8 @@ describe Login do
 
   describe 'validations' do
     before do
-      Login.any_instance.stub(:ensure_oauth2_token).and_return(true)
-      Login.any_instance.stub(:assign_single_use_oauth2_token).and_return(true)
+      allow_any_instance_of(Login).to receive(:ensure_oauth2_token).and_return(true)
+      allow_any_instance_of(Login).to receive(:assign_single_use_oauth2_token).and_return(true)
     end
 
     it { is_expected.to validate_presence_of(:identification) }

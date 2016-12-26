@@ -1,5 +1,11 @@
 describe 'an access-once route' do
-  subject { get '/access-once', {}, headers }
+  if Rails::VERSION::MAJOR < 5
+    # rubocop:disable Rails/HttpPositionalArguments
+    subject { get '/access-once', {}, headers }
+    # rubocop:enable Rails/HttpPositionalArguments
+  else
+    subject { get '/access-once', params: {}, headers: headers }
+  end
 
   let(:login) { create(:login) }
   let(:headers) do
@@ -52,7 +58,13 @@ describe 'an access-once route' do
 
   context 'when accessed a second time with the same token' do
     before do
-      get '/access-once', {}, headers
+      if Rails::VERSION::MAJOR < 5
+        # rubocop:disable Rails/HttpPositionalArguments
+        get '/access-once', {}, headers
+        # rubocop:enable Rails/HttpPositionalArguments
+      else
+        get '/access-once', params: {}, headers: headers
+      end
     end
 
     it_behaves_like 'when access is not allowed'

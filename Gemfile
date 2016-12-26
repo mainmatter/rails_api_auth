@@ -28,6 +28,7 @@ group :test do
   gem 'webmock', require: 'webmock/rspec'
   gem 'timecop'
   gem 'json_spec'
+  gem 'rails-controller-testing'
   gem 'test-unit'
   gem 'simplecov', require: false
 end
