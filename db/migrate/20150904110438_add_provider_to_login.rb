@@ -1,4 +1,4 @@
-class AddProviderToLogin < ActiveRecord::Migration
+class AddProviderToLogin < ActiveRecord::Migration[4.2]
 
   def change
     add_column :logins, :provider, :string

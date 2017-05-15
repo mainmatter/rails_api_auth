@@ -1,4 +1,4 @@
-class CreateLogins < ActiveRecord::Migration
+class CreateLogins < ActiveRecord::Migration[4.2]
 
   def change
     create_table :logins, primary_key_options(:id) do |t|
