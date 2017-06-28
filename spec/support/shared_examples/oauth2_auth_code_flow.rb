@@ -1,11 +1,11 @@
-shared_context 'oauth2 shared contexts' do
-  let(:params) { { grant_type: grant_type, auth_code: 'authcode' } }
+shared_examples 'an oauth2 auth_code flow' do
   let(:access_token) { 'access_token' }
   let(:email) { login.identification }
 
   context 'when a login with for the service account exists' do
     it 'connects the login to the service account' do
       subject
+
       expect(login.reload.uid).to eq(authenticated_user_data[uid_mapped_field.to_sym])
     end
 
@@ -17,6 +17,7 @@ shared_context 'oauth2 shared contexts' do
 
     it "responds with the login's OAuth 2.0 token" do
       subject
+
       expect(response.body).to be_json_eql({ access_token: login.oauth2_token }.to_json)
     end
   end
@@ -60,7 +61,7 @@ shared_context 'oauth2 shared contexts' do
 
   context 'when service responds with an error' do
     before do
-      stub_request(:get, profile_url % { access_token: access_token }).to_return(status: 422)
+      authenticator.any_instance.stub(:authenticate!).and_raise(error_class)
     end
 
     it 'responds with status 502' do

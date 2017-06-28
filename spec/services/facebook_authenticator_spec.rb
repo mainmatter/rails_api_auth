@@ -7,6 +7,9 @@ describe FacebookAuthenticator do
       id: '123123123123'
     }
   end
+
+  subject { FacebookAuthenticator.new(auth_code).authenticate! }
+
   include_context 'stubbed facebook requests'
-  it_behaves_like 'a authenticator'
+  it_behaves_like 'an authenticator'
 end
