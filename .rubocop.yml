@@ -6,31 +6,23 @@ AllCops:
     - 'vendor/**/*'
     - 'gemfiles/vendor/**/*'
     - 'spec/dummy/db/schema.rb'
+    - 'Guardfile'
 
 Rails:
   Enabled: true
 
-Style/AlignHash:
-  EnforcedHashRocketStyle: table
-  EnforcedLastArgumentHashStyle: always_ignore
-
-Style/BracesAroundHashParameters:
+Rails/ApplicationRecord:
   Enabled: false
 
-Style/DotPosition:
-  EnforcedStyle: trailing
+Rails/Blank:
+  Enabled: false
 
-Style/EmptyLinesAroundClassBody:
-  EnforcedStyle: empty_lines
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
 
-Style/EmptyLinesAroundModuleBody:
-  EnforcedStyle: empty_lines
-
-Style/IndentationConsistency:
-  EnforcedStyle: rails
-
-Style/IndentHash:
-  EnforcedStyle: consistent
+Style/FileName:
+  Exclude: ['Gemfile', 'Gemfile.lock', 'Appraisals']
 
 Style/RaiseArgs:
   EnforcedStyle: compact
@@ -38,27 +30,60 @@ Style/RaiseArgs:
 Style/RedundantReturn:
   AllowMultipleReturnValues: true
 
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
 Style/Documentation:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: false
+
+Style/FormatStringToken:
   Enabled: false
 
 Style/GuardClause:
   Enabled: false
 
-Metrics/LineLength:
+Style/PercentLiteralDelimiters:
   Enabled: false
-
-Style/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
-
-Style/SignalException:
-  EnforcedStyle: only_raise
 
 Style/NumericLiterals:
   Enabled: false
 
-Style/BlockDelimiters:
-  Exclude:
-    - 'spec/**/*'
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedLastArgumentHashStyle: always_ignore
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines
+
+Layout/IndentationConsistency:
+  EnforcedStyle: rails
+
+Layout/IndentHash:
+  EnforcedStyle: consistent
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
 
 Metrics/AbcSize:
   Max: 25
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
