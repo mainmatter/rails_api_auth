@@ -10,25 +10,25 @@ platforms :jruby do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'rspec-rails'
 end
 
 group :development do
   gem 'appraisal'
-  gem 'rubocop'
-  gem 'guard-rubocop'
-  gem 'guard-rspec', require: false
   gem 'guard-bundler', require: false
+  gem 'guard-rspec', require: false
+  gem 'guard-rubocop'
+  gem 'rubocop'
 end
 
 group :test do
-  gem 'shoulda'
-  gem 'webmock', require: 'webmock/rspec'
-  gem 'timecop'
   gem 'json_spec'
   gem 'rails-controller-testing'
-  gem 'test-unit'
+  gem 'shoulda'
   gem 'simplecov', require: false
+  gem 'test-unit'
+  gem 'timecop'
+  gem 'webmock', require: 'webmock/rspec'
 end
