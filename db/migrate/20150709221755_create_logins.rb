@@ -1,4 +1,6 @@
-class CreateLogins < ActiveRecord::Migration[4.2]
+require_relative 'rails_api_auth_migration'
+
+class CreateLogins < RailsAPIAuthMigration
 
   def change
     create_table :logins, primary_key_options(:id) do |t|
