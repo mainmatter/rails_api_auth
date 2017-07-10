@@ -17,6 +17,9 @@ Rails/ApplicationRecord:
 Rails/Blank:
   Enabled: false
 
+Rails/InverseOf:
+  Enabled: false
+
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'

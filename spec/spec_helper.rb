@@ -1,7 +1,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
-SimpleCov.start do ||
+SimpleCov.start do
   unless defined?(JRUBY_VERSION) || defined?(JRuby)
     minimum_coverage 95
     refuse_coverage_drop
