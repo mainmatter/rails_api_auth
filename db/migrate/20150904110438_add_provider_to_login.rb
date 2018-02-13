@@ -1,4 +1,6 @@
-class AddProviderToLogin < ActiveRecord::Migration
+require_relative 'rails_api_auth_migration'
+
+class AddProviderToLogin < RailsAPIAuthMigration
 
   def change
     add_column :logins, :provider, :string

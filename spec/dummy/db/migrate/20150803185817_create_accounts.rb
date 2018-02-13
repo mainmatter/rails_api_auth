@@ -1,4 +1,6 @@
-class CreateAccounts < ActiveRecord::Migration
+require_relative '../../../../db/migrate/rails_api_auth_migration'
+
+class CreateAccounts < RailsAPIAuthMigration
 
   def change
     create_table :accounts do |t|
