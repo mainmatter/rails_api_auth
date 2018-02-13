@@ -33,8 +33,7 @@ platforms :ruby, :mswin, :mingw do
 end
 
 platforms :jruby do
-  # Rails 5 support is not in master. See: https://github.com/jruby/activerecord-jdbc-adapter/issues/700
-  gem 'activerecord-jdbcsqlite3-adapter', git: 'https://github.com/jruby/activerecord-jdbc-adapter.git', branch: 'rails-5'
+  gem 'activerecord-jdbcsqlite3-adapter'
 end
 
 gemspec :path => "../"
