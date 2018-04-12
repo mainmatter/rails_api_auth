@@ -48,7 +48,7 @@ class GithubAuthenticator < BaseAuthenticator
     def token_options
       @token_options ||= {
         headers: {
-          Accept: 'application/json'
+          'Accept' => 'application/json'
         },
         body: {
           code: @auth_code,
