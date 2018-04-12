@@ -82,10 +82,9 @@ class Oauth2Controller < ApplicationController
       oauth2_error('no_authorization_code') && return unless auth_code.present?
       oauth2_error('no_auth_state') && return unless auth_state.present?
 
-      auth = GithubAuthenticator.new(auth_state, auth_code)
-      login = auth.authenticate!
+      login = GithubAuthenticator.new(auth_state, auth_code).authenticate!
 
-      render json: { access_token: login.oauth2_token, github_token: auth.github_token }
+      render json: { access_token: login.oauth2_token }
     rescue GithubAuthenticator::ApiError
       head 502
     end

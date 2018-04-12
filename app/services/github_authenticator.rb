@@ -12,11 +12,6 @@ class GithubAuthenticator < BaseAuthenticator
   def initialize(auth_state, auth_code)
     @auth_code = auth_code
     @auth_state = auth_state
-    @access_token = nil
-  end
-
-  def github_token
-    access_token
   end
 
   private
@@ -36,11 +31,8 @@ class GithubAuthenticator < BaseAuthenticator
     end
 
     def access_token
-      return @access_token if @access_token
-
       response = HTTParty.post(TOKEN_URL, token_options)
-      parsed_response = Rack::Utils.parse_nested_query(response).deep_symbolize_keys
-      @access_token = parsed_response[:access_token]
+      response.parsed_response['access_token']
     end
 
     def get_user(access_token)
@@ -55,6 +47,9 @@ class GithubAuthenticator < BaseAuthenticator
 
     def token_options
       @token_options ||= {
+        headers: {
+          Accept: 'application/json'
+        },
         body: {
           code: @auth_code,
           client_id: RailsApiAuth.github_client_id,
