@@ -8,7 +8,7 @@ SimpleCov.start do
   end
 end
 
-require File.expand_path('../dummy/config/environment.rb', __FILE__)
+require File.expand_path('dummy/config/environment.rb', __dir__)
 require 'rspec/rails'
 require 'factory_girl_rails'
 require 'faker'

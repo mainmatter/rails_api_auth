@@ -3,7 +3,7 @@
 # @!visibility private
 class LoginNotFound
 
-  def authenticate(_)
+  def authenticate(_password)
     false
   end
 

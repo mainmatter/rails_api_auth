@@ -31,7 +31,7 @@ class GoogleAuthenticator < BaseAuthenticator
     end
 
     def get_user(access_token)
-      @google_user ||= begin
+      @get_user ||= begin
         get_request(user_url(access_token)).parsed_response.symbolize_keys
       end
     end

@@ -10,9 +10,9 @@ class AuthenticatedController < ApplicationController
 
   def index
     if Rails::VERSION::MAJOR < 4
-      render text: 'zuper content', status: 200
+      render text: 'zuper content', status: :ok
     else
-      render plain: 'zuper content', status: 200
+      render plain: 'zuper content', status: :ok
     end
   end
 
