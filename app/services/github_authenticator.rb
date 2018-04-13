@@ -36,7 +36,7 @@ class GithubAuthenticator < BaseAuthenticator
     end
 
     def get_user(access_token)
-      @github_user ||= begin
+      @get_user ||= begin
         get_request(user_url(access_token)).parsed_response.symbolize_keys
       end
     end
@@ -47,9 +47,7 @@ class GithubAuthenticator < BaseAuthenticator
 
     def token_options
       @token_options ||= {
-        headers: {
-          'Accept' => 'application/json'
-        },
+        headers: { 'Accept' => 'application/json' },
         body: {
           code: @auth_code,
           client_id: RailsApiAuth.github_client_id,
