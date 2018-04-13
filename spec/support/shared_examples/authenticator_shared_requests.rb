@@ -4,6 +4,8 @@ shared_examples 'a authenticator' do
 
     if described_class::PROVIDER.eql? 'edx'
       subject { described_class.new(username, auth_code).authenticate! }
+    elsif described_class::PROVIDER.eql? 'github'
+      subject { described_class.new(auth_state, auth_code).authenticate! }
     else
       subject { described_class.new(auth_code).authenticate! }
     end

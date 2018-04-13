@@ -36,6 +36,18 @@ module RailsApiAuth
   # The Google App's redirect URI.
   mattr_accessor :google_redirect_uri
 
+  # @!attribute [rw] github_client_id
+  # The Github client ID.
+  mattr_accessor :github_client_id
+
+  # @!attribute [rw] github_client_secret
+  # The Github client secret.
+  mattr_accessor :github_client_secret
+
+  # @!attribute [rw] github_redirect_uri
+  # The Github App's redirect URI.
+  mattr_accessor :github_redirect_uri
+
   # @!attribute [rw] edx_client_id
   # The Edx client ID.
   mattr_accessor :edx_client_id

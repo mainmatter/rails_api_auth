@@ -18,6 +18,8 @@ class Oauth2Controller < ApplicationController
       authenticate_with_google(params[:auth_code])
     when 'edx_auth_code'
       authenticate_with_edx(params[:username], params[:auth_code])
+    when 'github_auth_code'
+      authenticate_with_github(params[:auth_state], params[:auth_code])
     else
       oauth2_error('unsupported_grant_type')
     end
@@ -73,6 +75,17 @@ class Oauth2Controller < ApplicationController
 
       render json: { access_token: login.oauth2_token }
     rescue EdxAuthenticator::ApiError
+      head 502
+    end
+
+    def authenticate_with_github(auth_state, auth_code)
+      oauth2_error('no_authorization_code') && return unless auth_code.present?
+      oauth2_error('no_auth_state') && return unless auth_state.present?
+
+      login = GithubAuthenticator.new(auth_state, auth_code).authenticate!
+
+      render json: { access_token: login.oauth2_token }
+    rescue GithubAuthenticator::ApiError
       head 502
     end
 
