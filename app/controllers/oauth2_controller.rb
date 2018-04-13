@@ -77,7 +77,7 @@ class Oauth2Controller < ApplicationController
     end
 
     def oauth2_error(error)
-      render json: { error: error }, status: 400
+      render json: { error: error }, status: :bad_request
     end
 
 end

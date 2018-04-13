@@ -48,7 +48,7 @@ class EdxAuthenticator < BaseAuthenticator
 
     def get_user(access_token)
       headers = { 'Authorization' => "Bearer #{access_token}" }
-      @edx_user ||= begin
+      @get_user ||= begin
         get_request(user_url, headers).parsed_response.symbolize_keys
       end
     end

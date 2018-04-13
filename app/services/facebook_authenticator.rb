@@ -31,7 +31,7 @@ class FacebookAuthenticator < BaseAuthenticator
     end
 
     def get_user(access_token)
-      @facebook_user ||= begin
+      @get_user ||= begin
         parsed_response = get_request(user_url(access_token)).parsed_response
         parsed_response.symbolize_keys
       end

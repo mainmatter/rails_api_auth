@@ -20,6 +20,9 @@ Rails/Blank:
 Rails/InverseOf:
   Enabled: false
 
+Rails/ActiveRecordAliases:
+  Enabled: false
+
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
