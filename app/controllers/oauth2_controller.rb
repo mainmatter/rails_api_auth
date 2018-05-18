@@ -21,7 +21,12 @@ class Oauth2Controller < ApplicationController
     when 'github_auth_code'
       authenticate_with_github(params[:auth_state], params[:auth_code])
     else
-      oauth2_error('unsupported_grant_type')
+      authenticator = lookup_authenticator(params[:grant_type])
+      if authenticator
+        authenticate_with_custom_provider(authenticator, params)
+      else
+        oauth2_error('unsupported_grant_type')
+      end
     end
   end
 
@@ -87,6 +92,19 @@ class Oauth2Controller < ApplicationController
       render json: { access_token: login.oauth2_token }
     rescue GithubAuthenticator::ApiError
       head 502
+    end
+
+    def authenticate_with_custom_provider(authenticator, params)
+      login = authenticator.new(params).authenticate!
+
+      render json: { access_token: login.oauth2_token }
+    rescue BaseAuthenticator::ApiError
+      head 502
+    end
+
+    def lookup_authenticator(grant_type)
+      klass = (RailsApiAuth.custom_providers || {})[:"#{grant_type}"]
+      klass.constantize if klass
     end
 
     def oauth2_error(error)

@@ -89,6 +89,71 @@ describe 'Oauth2 API' do
         include_examples 'oauth2 edx shared contexts'
       end
 
+      context 'for a custom grant_type' do
+        let(:params) { { grant_type: 'custom_auth_code' } }
+
+        context 'when an authenticator is mapped to the grant type' do
+          class CustomAuthenticator < BaseAuthenticator
+          end
+
+          before do
+            RailsApiAuth.custom_providers = { custom_auth_code: CustomAuthenticator.name }
+          end
+
+          after do
+            RailsApiAuth.custom_providers = nil
+          end
+
+          context 'when authentication succeeds' do
+            before do
+              allow_any_instance_of(CustomAuthenticator).to receive(:authenticate!).and_return(login)
+            end
+
+            it 'responds with status 200' do
+              subject
+              expect(response).to have_http_status(200)
+            end
+
+            it "responds with the login's OAuth 2.0 token" do
+              subject
+              expect(response.body).to be_json_eql({ access_token: login.oauth2_token }.to_json)
+            end
+          end
+
+          context 'when authentication falis' do
+            before do
+              allow_any_instance_of(CustomAuthenticator).to receive(:authenticate!).and_raise(BaseAuthenticator::ApiError)
+            end
+
+            it 'responds with status 502' do
+              subject
+
+              expect(response).to have_http_status(502)
+            end
+
+            it 'responds with an empty response body' do
+              subject
+
+              expect(response.body.strip).to eql('')
+            end
+          end
+        end
+
+        context 'when no authenticator is mapped to the grant type' do
+          it 'responds with status 400' do
+            subject
+
+            expect(response).to have_http_status(400)
+          end
+
+          it 'responds with an "unsupported_grant_type" error' do
+            subject
+
+            expect(response.body).to be_json_eql({ error: 'unsupported_grant_type' }.to_json)
+          end
+        end
+      end
+
       context 'for an unknown grant type' do
         let(:params) { { grant_type: 'UNKNOWN' } }
 
