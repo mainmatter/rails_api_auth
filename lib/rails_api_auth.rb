@@ -74,4 +74,8 @@ module RailsApiAuth
   mattr_accessor :force_ssl
   self.force_ssl = !Rails.env.development?
 
+  # @!attribute [rw] custom_providers
+  # Mapping of custom grant types to provider implementations
+  mattr_accessor :custom_providers
+
 end
